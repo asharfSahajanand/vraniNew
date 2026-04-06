@@ -1,5 +1,4 @@
 // Your JavaScript code here
-
 // Initialize variables
 let currentQuestionIndex = 0; // Index to track current question
 let coin = 0; // Variable to store earned coins
