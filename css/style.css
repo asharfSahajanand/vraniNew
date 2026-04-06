@@ -307,7 +307,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: none;
+  display: flex;
   opacity: 0;
   align-items: center;
   justify-content: center;
@@ -321,15 +321,15 @@ body {
 .popup-content {
   position: relative;
   height: auto;
-  border: none;
+  border: 1px solid #888;
   color: #fff;
+  border-radius: 5px;
   margin: 0 auto;
   width: 600px;
   padding: 10px;
   position: absolute;
   pointer-events: auto;
   z-index: 1001;
-  background: transparent;
 }
 
 .close-popup {
@@ -351,73 +351,25 @@ body {
   z-index: 1003;
 }
 
-/* Ad Container Styling */
-.ads-box {
-  width: 100%;
-  max-width: 425px;
-  margin: 1rem auto;
-  padding: 0;
-  background: transparent;
+.adsbygoogle {
+  background-color: #292828; /* Dark background for fallback */
+  display: flex; /* Enable flexbox for centering */
+  align-items: center; /* Vertically center content */
+  justify-content: center; /* Horizontally center content */
+  color: #ccc; /* Text color */
+  font-size: 14px;
+  font-weight: bold;
+  min-height: 250px; /* Set a default height */
+  text-transform: uppercase; /* Optional styling */
   position: relative;
-  text-align: center;
-  border: none;
-  min-height: 250px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.ad-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  min-height: 250px;
+.adsbygoogle::before {
+  content: 'ads';
+  color: #ccc;
+  font-weight: bold;
 }
 
-.ads-box::before {
-  content: "";
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #999;
-  background: transparent;
-  padding: 4px 12px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-#banner-ad {
-  width: 100%;
-  max-width: 425px;
-  margin: 1rem auto 0.5rem;
-  padding: 0;
-  background: transparent;
-  position: relative;
-  text-align: center;
-  border: none;
-}
-
-#banner-ad::before {
-  content: "";
-  position: absolute;
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: #999;
-  background: transparent;
-  padding: 0 8px;
-  border: none;
-}
 
 @media screen and (max-width: 640px) {
   .popup-content {

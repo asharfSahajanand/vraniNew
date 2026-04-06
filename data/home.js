@@ -402,9 +402,6 @@ let sub_category = JSON.parse(`[
 ]`);
 
 const container = document.getElementById("sub_categories");
-
-console.log(sub_category.length)
-
 sub_category.forEach((item) => {
   const div = document.createElement("div");
   div.className = "col my-3 h-auto w-full";

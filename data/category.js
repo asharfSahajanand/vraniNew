@@ -524,7 +524,7 @@ categories.forEach((item) => {
                 <div class="">
                     <img src="/images/${item.img}" alt=""
                         class="w-16 m-auto rounded-xl  p-1">
-                    <p class="font-bold text-sm  mt-2">Festivals</p>
+                    <p class="font-bold text-sm  mt-2">${item.name}</p>
                 </div>
             </div>
         </div>
@@ -535,44 +535,64 @@ categories.forEach((item) => {
 
 const Subcatcontainer = document.getElementById("sub_categories")
 
-function SelectCatSbucat(id){
-    Subcatcontainer.innerHTML = ""
-    container.innerHTML = ""
+function SelectCatSbucat(item) {
 
-    sub_category.forEach((item) => {
-        const div = document.createElement("div");
-        div.className = "col my-3 h-auto w-full";
-      
-        div.innerHTML = `
-          <div class="q_tile h-auto">
-           <a href="/quizentry.html?sc_id=${item.sc_id}">
-              <div class="flex p-3 h-full">
-                <div class="flex-none w-16 h-16 my-auto">
-                  <img src="/images/${item.img}" style="filter: drop-shadow(5px 4px 3px black);" class="w-full object-cover md:h-full" alt="question_img">
-                </div>
-                <div class="grow w-full h-auto my-auto p-2">
-                  <div class="">
-                    <p class="font-bold text-xs">${item.c_name} | ${item.sc_name}</p>
-                    <p class="font-bold mt-0 text-gray-400 text-sm xs:text-xs">
-                      Play &amp; Win ${item.totalPrice} 
-                      <i class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins
-                    </p>
-                    <p class="entry_fee text-xs m-auto mt-2 w-60">
-                      Entry Fee ${item.entryFee} 
-                      <i class="fa-solid fa-coins" style="color: #FFD43B;"></i>
-                    </p>
-                  </div>
-                </div>
-                <div class="flex-none w-14 h-14 my-auto">
-                  <div class="quiz_play_fwd_btn p-2">
-                    <i class="fa-solid fa-chevron-right font-extrabold"></i>
-                  </div>
-                </div>
+    console.log(item);
+    
+  Subcatcontainer.innerHTML = "";
+  container.innerHTML = "";
+
+  // 🧠 Filter subcategories related to the selected category
+  const relatedSubcats = sub_category.filter(sub => sub.id == item);
+
+//   console.log(relatedSubcats);
+  
+  // If no related quizzes found
+  if (relatedSubcats.length === 0) {
+    Subcatcontainer.innerHTML = `
+      <div class="text-center text-gray-400 font-bold p-4">
+        No related quizzes found.
+      </div>
+    `;
+    return;
+  }
+
+  // 🧩 Loop through related subcategories
+  relatedSubcats.forEach((sub) => {
+    const div = document.createElement("div");
+    div.className = "col my-3 h-auto w-full";
+
+    div.innerHTML = `
+      <div class="q_tile h-auto">
+        <a href="/quizentry.html?sc_id=${sub.sc_id}">
+          <div class="flex p-3 h-full">
+            <div class="flex-none w-16 h-16 my-auto">
+              <img src="/images/${sub.img}" 
+                   style="filter: drop-shadow(5px 4px 3px black);" 
+                   class="w-full object-cover md:h-full" 
+                   alt="question_img">
+            </div>
+            <div class="grow w-full h-auto my-auto p-2">
+              <p class="font-bold text-xs">${sub.c_name} | ${sub.sc_name}</p>
+              <p class="font-bold mt-0 text-gray-400 text-sm xs:text-xs">
+                Play & Win ${sub.totalPrice} 
+                <i class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins
+              </p>
+              <p class="entry_fee text-xs m-auto mt-2 w-60">
+                Entry Fee ${sub.entryFee} 
+                <i class="fa-solid fa-coins" style="color: #FFD43B;"></i>
+              </p>
+            </div>
+            <div class="flex-none w-14 h-14 my-auto">
+              <div class="quiz_play_fwd_btn p-2">
+                <i class="fa-solid fa-chevron-right font-extrabold"></i>
               </div>
-             </a>
+            </div>
           </div>
-        `;
-      
-        Subcatcontainer.appendChild(div);
-      });
+        </a>
+      </div>
+    `;
+
+    Subcatcontainer.appendChild(div);
+  });
 }

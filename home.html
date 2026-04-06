@@ -2,214 +2,294 @@
 <html lang="en">
 
 <head>
-    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     <meta charset="UTF-8">
-    <!-- Google tag (gtag.js) -->
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-7EEBHF5QN5"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-7EEBHF5QN5'); 
-    </script>-->
-    <!-- Viewport meta tag to ensure proper scaling on different devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Title of the web page -->
-    <title> vubi | Play Quiz game Learn & Gain Knowledge </title>
-    <!-- Favicon Of Site -->
+    <title>Quizzigo | Play Quiz game Learn & Gain Knowledge</title>
     <link rel="shortcut icon" href="/images/quiz_favicon.png" type="image/x-icon">
-    <!-- Link to Tailwind CSS for styling -->
     <link href="/css/tailwind.min.css" rel="stylesheet">
-    <!-- Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Link to custom CSS for additional styles -->
     <link rel="stylesheet" href="/css/style.css">
-    <!-- jQuery library -->
     <script src="/js/jquery-3.6.4.min.js"></script>
-    <script src="/js/ads.js"></script>
-<script>
-    window.adsbygoogle = window.adsbygoogle || [];
-    var afg = {};
 
-    afg.adBreak = window.adConfig = function (o) {
-      adsbygoogle.push(o);
-    };
-    afg.ready = false;
+    <!-- ✅ Single AdSense script — no duplicates -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9834562109249399"
+        crossorigin="anonymous"></script>
 
-    var onReady = function () {
-      afg.adBreak({
-        type: 'start',
-        name: 'gamesdonut-ads',
-        beforeAd: () => {
-          console.log('>> Before AD')
-        },
-        adBreakDone: () => {
-          console.log('>> After AD')
+    <!-- ✅ Single adBreak / adConfig setup -->
+    <script>
+        window.adsbygoogle = window.adsbygoogle || [];
+        var adBreak = window.adBreak = adConfig = function (o) { adsbygoogle.push(o); };
+        adConfig({
+            preloadAdBreaks: 'on',
+            sound: 'off',
+        });
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+            var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MRF99376');</script>
+
+    <style>
+        /* Reward button pulse animation */
+        @keyframes pulse-coin {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.18);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
-      });
-    };
-    window.afg = afg;
-  </script>
 
-  <script>
-    window.adsbygoogle = window.adsbygoogle || []; var adBreak = adConfig = function (o) { adsbygoogle.push(o); }
-    adConfig({
-      preloadAdBreaks: 'on',
-      sound: 'off',
-    });
-  </script>
+        #lottie-container {
+            animation: pulse-coin 2s ease-in-out infinite;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #lottie-container:active {
+            transform: scale(0.9);
+        }
+
+        /* Toast styles */
+        #toast-container .toast-item {
+            background: #1f1f1f;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRF99376" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+
+    <!-- Toast container -->
+    <div id="toast-container" class="fixed top-5 right-5 space-y-4" style="z-index: 99999;"></div>
+
     <div>
-        <div id="toast-container" class="fixed top-5 right-5 space-y-4"></div>
         <div class="mobile">
             <div class="d-flex justify-center text-center">
-                <div style="width: 100%;">
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-0 lg:gap-0">
 
-                    <div class=" grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-0 lg:gap-0 ">
-                        <!-- Logo section -->
-                        <div class="col-auto">
+                    <!-- Logo -->
+                    <div class="col-auto p-1">
+                        <a href="/home.html">
                             <img src="/images/logo.png" alt="Logo" class="px-2">
-                        </div>
-                        <!-- Lottie animation for reward ad -->
-                        <div class="flex justify-end items-center col-span-3">
-                            <div onclick="RewardAd()" id="lottie-container" class="inline-block"
-                                style="width: 40px; height: 40px;">
-                                <img src="/images/Reward.png" alt="Reward">
-                            </div>
-                        </div>
-                        <!-- User wallet display -->
-                        <div class="user_wallet text-sm font-semibold flex justify-end items-center col-end-6 mr-3">
-                            <span class="rounded-full px-3 me-2"><strong id="total_coins"></strong> <i
-                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i> </span>
-                        </div>
+                        </a>
                     </div>
-                </div>
 
-                <!-- Categories section -->
-                <div class="first_layer_home text-center p-3 mt-3">
-                    <!-- First ad slot -->
-                    <div class="ads-box mb-4" style="min-height: 250px !important; display: block !important;">
-
-                        <div id="ad-slot-1" class="ad-container w-full flex justify-center"></div>
+                    <!-- ✅ Reward button — fixed z-index, pointer-events, tap area -->
+                    <div class="flex justify-end items-center col-span-3" style="position: relative; z-index: 100;">
+                        <button id="lottie-container" onclick="RewardAd()" title="Watch ad to earn coins" style="
+                                width: 48px;
+                                height: 48px;
+                                background: none;
+                                border: none;
+                                padding: 4px;
+                                cursor: pointer;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                position: relative;
+                                z-index: 100;
+                                pointer-events: all;
+                                -webkit-tap-highlight-color: transparent;
+                            ">
+                            <img src="/images/Reward.png" alt="Reward"
+                                style="width: 40px; height: 40px; display: block; pointer-events: none;">
+                        </button>
                     </div>
-                    <div class="row" id="sub_categories">
-                        <!-- Here's subcategoyr content -->
+
+                    <!-- Coin wallet -->
+                    <div class="user_wallet text-sm font-semibold flex justify-end items-center col-end-6 mr-3">
+                        <span class="rounded-full px-3 me-2">
+                            <strong id="total_coins">0</strong>
+                            <i class="fa-solid fa-coins" style="color: #FFD43B;"></i>
+                        </span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Bottom navigation bar -->
-        <div class="sticky bottom-0" style="background-color: transparent;">
-            <div class="m-auto  left-0 z-50 w-full h-16 bg-dark  dark:border-gray-600 bottom_bar"
-                style="background-color: #454545; border-radius: 14px 14px 0 0; box-shadow: #1a1a1a 0px -10px 10px;">
-                <div class="grid h-full max-w-lg grid-cols-3 mx-auto">
-                    <!-- Category button -->
-                    <button type="button" onclick="window.location.href='/category.html'"
-                        class="inline-flex flex-col items-center justify-center font-medium px-5  dark:hover:bg-gray-800 group">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path
-                                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                                stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
-                        <span class="text-sm">Category</span>
-                    </button>
-                    <!-- Home button -->
-                    <button type="button" onclick="window.location.href='/home.html'"
-                        class="inline-flex flex-col items-center justify-center font-medium px-5  bg-gray-700 group"
-                        style="background-color: #454545; border-radius: 14px 14px 0 0; box-shadow: #1a1a1a  0px 0px 19px">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="#ffff" stroke="#ffff"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M10.7069 2.29303C10.5194 2.10556 10.2651 2.00024 9.99992 2.00024C9.73475 2.00024 9.48045 2.10556 9.29292 2.29303L2.29292 9.29303C2.11076 9.48163 2.00997 9.73423 2.01224 9.99643C2.01452 10.2586 2.11969 10.5094 2.3051 10.6948C2.49051 10.8803 2.74132 10.9854 3.00352 10.9877C3.26571 10.99 3.51832 10.8892 3.70692 10.707L3.99992 10.414V17C3.99992 17.2652 4.10528 17.5196 4.29281 17.7071C4.48035 17.8947 4.7347 18 4.99992 18H6.99992C7.26514 18 7.51949 17.8947 7.70703 17.7071C7.89456 17.5196 7.99992 17.2652 7.99992 17V15C7.99992 14.7348 8.10528 14.4805 8.29281 14.2929C8.48035 14.1054 8.7347 14 8.99992 14H10.9999C11.2651 14 11.5195 14.1054 11.707 14.2929C11.8946 14.4805 11.9999 14.7348 11.9999 15V17C11.9999 17.2652 12.1053 17.5196 12.2928 17.7071C12.4803 17.8947 12.7347 18 12.9999 18H14.9999C15.2651 18 15.5195 17.8947 15.707 17.7071C15.8946 17.5196 15.9999 17.2652 15.9999 17V10.414L16.2929 10.707C16.4815 10.8892 16.7341 10.99 16.9963 10.9877C17.2585 10.9854 17.5093 10.8803 17.6947 10.6948C17.8801 10.5094 17.9853 10.2586 17.9876 9.99643C17.9899 9.73423 17.8891 9.48163 17.7069 9.29303L10.7069 2.29303Z"
-                                fill="#ffff" />
-                        </svg>
-                        <span class="text-sm">Home</span>
-                    </button>
-                    <!-- Profile button -->
-                    <button type="button" onclick="window.location.href='/profile.html'"
-                        class="inline-flex flex-col items-center justify-center font-medium px-5  dark:hover:bg-gray-800 group">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path
-                                d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
-                        <span class="text-sm">Profile</span>
-                    </button>
+            <!-- Categories section -->
+            <div class="first_layer_home text-center p-3 mt-3">
+                <div style="width: 100%;">
+                    <ins class="adsbygoogle my-5 ads-content" style="display:block; text-align:center;"
+                        data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-9834562109249399"
+                        data-ad-slot="4306431074"></ins>
+                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                </div>
+                <div class="row" id="sub_categories">
+                    <!-- Subcategory content injected by home.js -->
                 </div>
             </div>
         </div>
+    </div>
 
-        <script src="./data/home.js"></script>
-        <script>
+    <!-- Bottom navigation bar -->
+    <div class="sticky bottom-0" style="background-color: transparent;">
+        <div class="m-auto left-0 z-50 w-full h-16 bg-dark dark:border-gray-600 bottom_bar"
+            style="background-color: #454545; border-radius: 14px 14px 0 0; box-shadow: #1a1a1a 0px -10px 10px;">
+            <div class="grid h-full max-w-lg grid-cols-3 mx-auto">
 
+                <!-- Category -->
+                <button type="button" onclick="window.location.href='/category.html'"
+                    class="inline-flex flex-col items-center justify-center font-medium px-5 dark:hover:bg-gray-800 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <span class="text-sm">Category</span>
+                </button>
 
-            function showToast(e) {
-                // Create the toast element
-                const toast = document.createElement('div');
-                toast.className = 'max-w-xs  border border-gray-200 p-4 rounded shadow-lg flex items-center space-x-4';
-                toast.innerHTML = `
-            <div class="flex-shrink-0">
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7 12l5 5L21 7" />
-              </svg>
+                <!-- Home -->
+                <button type="button" onclick="window.location.href='/home.html'"
+                    class="inline-flex flex-col items-center justify-center font-medium px-5 bg-gray-700 group"
+                    style="background-color: #454545; border-radius: 14px 14px 0 0; box-shadow: #1a1a1a 0px 0px 19px">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="#ffff" stroke="#ffff"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10.7069 2.29303C10.5194 2.10556 10.2651 2.00024 9.99992 2.00024C9.73475 2.00024 9.48045 2.10556 9.29292 2.29303L2.29292 9.29303C2.11076 9.48163 2.00997 9.73423 2.01224 9.99643C2.01452 10.2586 2.11969 10.5094 2.3051 10.6948C2.49051 10.8803 2.74132 10.9854 3.00352 10.9877C3.26571 10.99 3.51832 10.8892 3.70692 10.707L3.99992 10.414V17C3.99992 17.2652 4.10528 17.5196 4.29281 17.7071C4.48035 17.8947 4.7347 18 4.99992 18H6.99992C7.26514 18 7.51949 17.8947 7.70703 17.7071C7.89456 17.5196 7.99992 17.2652 7.99992 17V15C7.99992 14.7348 8.10528 14.4805 8.29281 14.2929C8.48035 14.1054 8.7347 14 8.99992 14H10.9999C11.2651 14 11.5195 14.1054 11.707 14.2929C11.8946 14.4805 11.9999 14.7348 11.9999 15V17C11.9999 17.2652 12.1053 17.5196 12.2928 17.7071C12.4803 17.8947 12.7347 18 12.9999 18H14.9999C15.2651 18 15.5195 17.8947 15.707 17.7071C15.8946 17.5196 15.9999 17.2652 15.9999 17V10.414L16.2929 10.707C16.4815 10.8892 16.7341 10.99 16.9963 10.9877C17.2585 10.9854 17.5093 10.8803 17.6947 10.6948C17.8801 10.5094 17.9853 10.2586 17.9876 9.99643C17.9899 9.73423 17.8891 9.48163 17.7069 9.29303L10.7069 2.29303Z"
+                            fill="#ffff" />
+                    </svg>
+                    <span class="text-sm">Home</span>
+                </button>
+
+                <!-- Profile -->
+                <button type="button" onclick="window.location.href='/profile.html'"
+                    class="inline-flex flex-col items-center justify-center font-medium px-5 dark:hover:bg-gray-800 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <span class="text-sm">Profile</span>
+                </button>
+
             </div>
-            <div>
-              <p class="text-sm font-semibold">${e.title}</p>
-              <p class="text-sm">${e.msg}</p>
-            </div>
-          `;
+        </div>
+    </div>
 
-                // Append the toast to the container
-                document.getElementById('toast-container').appendChild(toast);
+    <script src="./data/home.js"></script>
 
-                // Automatically remove the toast after 3 seconds
-                setTimeout(() => {
-                    toast.remove();
-                }, 3000);
+    <script>
+        // ─── Coin helpers ──────────────────────────────────────────────
+        function getCoins() {
+            return parseInt(localStorage.getItem('totalcoin') || '0', 10);
+        }
+        function addCoins(amount) {
+            const newTotal = getCoins() + amount;
+            localStorage.setItem('totalcoin', newTotal);
+            document.getElementById('total_coins').innerText = newTotal;
+            return newTotal;
+        }
+
+        // Initialise display
+        document.getElementById('total_coins').innerText = getCoins();
+
+        // ─── Toast ─────────────────────────────────────────────────────
+        function showToast({ title, msg }) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-item';
+            toast.innerHTML = `
+                <svg style="flex-shrink:0;width:20px;height:20px;color:#4ade80"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4M7 12l5 5L21 7"/>
+                </svg>
+                <div>
+                    <p style="font-weight:600;margin:0">${title}</p>
+                    <p style="margin:0;opacity:0.85">${msg}</p>
+                </div>`;
+            document.getElementById('toast-container').appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ─── Reward Ad ─────────────────────────────────────────────────
+        function RewardAd() {
+            // Fallback: if adBreak not loaded, just give coins
+            if (adBreak !== 'function') {
+                console.log("ksdlfjsk");
+
+                showToast({ title: 'Coins Not Added!', msg: 'Try Later (ad not available)' });
+                return;
             }
 
-            let allcoins = localStorage.getItem('totalcoin');
-            document.getElementById('total_coins').innerText = allcoins
+            adBreak({
+                type: 'reward',
+                name: 'reward_coin',
+                beforeReward: function (showAdFn) {
+                    showAdFn();
+                },
+                adDismissed: function () {
+                    showToast({ title: 'Dismissed', msg: '🚫 Ad was dismissed — no coins awarded' });
+                },
+                adViewed: function () {
+                    // fires when ad fully watched — coins awarded in adBreakDone
+                },
+                adBreakDone: function (placementInfo) {
+                    console.log('breakStatus:', placementInfo.breakStatus);
+                    if (placementInfo.breakStatus === 'viewed') {
+                        addCoins(100);
+                        showToast({ title: 'Congratulations!', msg: '🥳 +100 coins added!' });
+                    } else if (
+                        placementInfo.breakStatus === 'noAdPreloaded' ||
+                        placementInfo.breakStatus === 'noAdAvailable' ||
+                        placementInfo.breakStatus === 'frequencyCapped' ||
+                        placementInfo.breakStatus === 'other'
+                    ) {
+                        // Fallback — reward anyway so user isn't frustrated
+                        addCoins(100);
+                        showToast({ title: 'Coins Not Added!', msg: 'Try Later (ad not available)' });
+                    }
+                }
+            });
+        }
 
-            function RewardAd() {
-      adBreak({
-        type: 'reward',           // The type of this placement
-        name: 'game_started',     // A descriptive name for this placement
-
-        beforeReward: (showAdFn) => {
-          console.log("beforeReward");
-          showAdFn(0); // Show the ad immediately
-        },
-
-        adDismissed: () => {
-          console.log("adDismissed");
-        },
-
-        adViewed: () => {
-          console.log("adViewed");
-        },
-
-        adBreakDone: (placementInfo) => {
-          console.log(placementInfo.breakStatus);
-
-          if (placementInfo.breakStatus === "viewed") {
-            localStorage.totalcoin = 100;
-            showToast({ title: "Congratulation!", msg: "🥳 Reward Added" });
-
-          } else {
-            // 
-            showToast({ title: "Sorry!", msg: "🚫Reward Ad Not available" });
-          }
-        },
-      });
-    }
-        </script>
+        // ─── Interstitial Ad ───────────────────────────────────────────
+        function ShowInterstitialAd() {
+            if (typeof adBreak !== 'function') return;
+            adBreak({
+                type: 'start',
+                name: 'game_started',
+                adBreakDone: function (placementInfo) {
+                    console.log('interstitial breakStatus:', placementInfo.breakStatus);
+                }
+            });
+        }
+    </script>
 
 </body>
 

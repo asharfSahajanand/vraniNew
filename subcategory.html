@@ -3,19 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <!-- Google tag (gtag.js) -->
-    <!--<script async src="https://www.googletagmanager.com/gtag/js?id=G-7EEBHF5QN5"></script>
-     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-7EEBHF5QN5');
-    </script> -->
     <!-- Viewport meta tag to ensure proper scaling on different devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title of the web page -->
-    <title> vubi | Play Quiz game Learn & Gain Knowledge </title>
+    <title> Quizzigo | Play Quiz game Learn & Gain Knowledge </title>
     <!-- Favicon Of Site -->
     <link rel="shortcut icon" href="/images/quiz_favicon.png" type="image/x-icon">
     <!-- Link to Tailwind CSS for styling -->
@@ -26,352 +17,370 @@
     <link rel="stylesheet" href="/css/style.css">
     <!-- jQuery library -->
     <script src="/js/jquery-3.6.4.min.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1615420563101212"
+        data-overlays="bottom" crossorigin="anonymous"></script>
+    <script>
+        window.adsbygoogle = window.adsbygoogle || [];
+        var afg = {};
 
-<script>
-    window.adsbygoogle = window.adsbygoogle || [];
-    var afg = {};
+        afg.adBreak = window.adConfig = function (o) {
+            adsbygoogle.push(o);
+        };
+        afg.ready = false;
 
-    afg.adBreak = window.adConfig = function (o) {
-      adsbygoogle.push(o);
-    };
-    afg.ready = false;
+        var onReady = function () {
+            afg.adBreak({
+                type: 'start',
+                name: 'gamesdonut-ads',
+                beforeAd: () => {
+                    console.log('>> Before AD')
+                },
+                adBreakDone: () => {
+                    console.log('>> After AD')
+                }
+            });
+        };
+        window.afg = afg;
+    </script>
 
-    var onReady = function () {
-      afg.adBreak({
-        type: 'start',
-        name: 'gamesdonut-ads',
-        beforeAd: () => {
-          console.log('>> Before AD')
-        },
-        adBreakDone: () => {
-          console.log('>> After AD')
-        }
-      });
-    };
-    window.afg = afg;
-  </script>
+    <script>
+        window.adsbygoogle = window.adsbygoogle || []; var adBreak = adConfig = function (o) { adsbygoogle.push(o); }
+        adConfig({
+            preloadAdBreaks: 'on',
+            sound: 'off',
+        });
+    </script>
 
-  <script>
-    window.adsbygoogle = window.adsbygoogle || []; var adBreak = adConfig = function (o) { adsbygoogle.push(o); }
-    adConfig({
-      preloadAdBreaks: 'on',
-      sound: 'off',
-    });
-  </script>
-
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MRF99376');</script>
+    <!-- End Google Tag Manager -->
 </head>
 
 <body>
-
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRF99376" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div>
         <!-- Toast container for displaying toast notifications -->
-        <div id="toast-container" class="fixed top-5 right-5 space-y-4"></div>
+       <div id="toast-container" class="fixed top-5 right-5 space-y-4" style="z-index: 99999;"></div>
 
         <div class="mobile">
             <div class="d-flex justify-center text-center">
                 <div style="width: 100%;">
-
-                    <div class=" grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-0 lg:gap-0 ">
-                        <!-- Logo section -->
-                        <div class="col-auto">
-                            <img src="/images/logo.png" alt="Logo" class="px-2">
-                        </div>
-                        <!-- Lottie animation for reward ad -->
-                        <div class="flex justify-end items-center col-span-3">
-                            <div onclick="RewardAd()" id="lottie-container" class="inline-block"
-                                style="width: 40px; height: 40px;">
-                                <img src="/images/Reward.png" alt="Reward">
-                            </div>
-                        </div>
-                        <!-- User wallet display -->
-                        <div
-                            class="user_wallet text-sm font-semibold text-green-800 flex justify-end items-center col-end-6 mr-3">
-                            <span class="rounded-full px-3 me-2"><strong id="total_coins"></strong> <i
-                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i> </span>
-                        </div>
-                    </div>
+                    <ins class="adsbygoogle my-5 ads-content" style="display:block; text-align:center;"
+                        data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1615420563101212"
+                        data-ad-slot="4306431074"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
                 </div>
-                <!-- Categories section -->
-                <div class="first_layer_home text-center p-2 mt-3">
-                    <div class="row" id="sub_categories">
-                        <!-- Here's subcategoyr content -->
-                        <div class="col m-2 h-auto w-full">
-                            <div class="q_tile h-auto ">
-                                <a href="/quizentry.html">
-                                    <div class="flex p-3 h-full">
-                                        <div class="flex-none w-16 h-16 my-auto">
-                                            <img src="/images/vocab.png" class="w-full object-cover md:h-full"
-                                                alt="question_img">
-                                        </div>
-                                        <div class="grow w-full h-auto my-auto p-2">
-                                            <div class="">
-                                                <p class="font-bold text-xs text-green-700">Vocabulary |
-                                                    English-Hindi-Translation</p>
-                                                <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
-                                                <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
-                                            </div>
-                                        </div>
-                                        <div class="flex-none w-14 h-14 my-auto">
-                                            <div class="quiz_play_fwd_btn p-2">
-                                                <i class="fa-solid fa-chevron-right font-extrabold"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col m-2 h-auto w-full">
-                            <div class="q_tile h-auto ">
-                                <a href="/quizentry.html">
-                                    <div class="flex p-3 h-full">
-                                        <div class="flex-none w-16 h-16 my-auto">
-                                            <img src="/images/sports.png" class="w-full object-cover md:h-full"
-                                                alt="question_img">
-                                        </div>
-                                        <div class="grow w-full h-auto my-auto p-2">
-                                            <div class="">
-                                                <p class="font-bold text-xs text-green-700">Sports | Cricket</p>
-                                                <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
-                                                <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
-                                            </div>
-                                        </div>
-                                        <div class="flex-none w-14 h-14 my-auto">
-                                            <div class="quiz_play_fwd_btn p-2">
-                                                <i class="fa-solid fa-chevron-right font-extrabold"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col m-2 h-auto w-full">
-                            <div class="q_tile h-auto ">
-                                <a href="/quizentry.html">
-                                    <div class="flex p-3 h-full">
-                                        <div class="flex-none w-16 h-16 my-auto">
-                                            <img src="/images/festival-min.png" class="w-full object-cover md:h-full"
-                                                alt="question_img">
-                                        </div>
-                                        <div class="grow w-full h-auto my-auto p-2">
-                                            <div class="">
-                                                <p class="font-bold text-xs text-green-700">Festivals | Onam</p>
-                                                <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
-                                                <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
-                                            </div>
-                                        </div>
-                                        <div class="flex-none w-14 h-14 my-auto">
-                                            <div class="quiz_play_fwd_btn p-2">
-                                                <i class="fa-solid fa-chevron-right font-extrabold"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col m-2 h-auto w-full">
-                            <div class="q_tile h-auto ">
-                                <a href="/quizentry.html">
-                                    <div class="flex p-3 h-full">
-                                        <div class="flex-none w-16 h-16 my-auto">
-                                            <img src="/images/math.png" class="w-full object-cover md:h-full"
-                                                alt="question_img">
-                                        </div>
-                                        <div class="grow w-full h-auto my-auto p-2">
-                                            <div class="">
-                                                <p class="font-bold text-xs text-green-700">Fun Maths | Easy-Math-Trivia
-                                                </p>
-                                                <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
-                                                <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
-                                            </div>
-                                        </div>
-                                        <div class="flex-none w-14 h-14 my-auto">
-                                            <div class="quiz_play_fwd_btn p-2">
-                                                <i class="fa-solid fa-chevron-right font-extrabold"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col m-2 h-auto w-full">
-                            <div class="q_tile h-auto ">
-                                <a href="/quizentry.html">
-                                    <div class="flex p-3 h-full">
-                                        <div class="flex-none w-16 h-16 my-auto">
-                                            <img src="/images/grammar.png" class="w-full object-cover md:h-full"
-                                                alt="question_img">
-                                        </div>
-                                        <div class="grow w-full h-auto my-auto p-2">
-                                            <div class="">
-                                                <p class="font-bold text-xs text-green-700">English Grammar |
-                                                    Verb-Adverb
-                                                </p>
-                                                <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
-                                                <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
-                                            </div>
-                                        </div>
-                                        <div class="flex-none w-14 h-14 my-auto">
-                                            <div class="quiz_play_fwd_btn p-2">
-                                                <i class="fa-solid fa-chevron-right font-extrabold"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col m-2 h-auto w-full">
-                            <div class="q_tile h-auto ">
-                                <a href="/quizentry.html">
-                                    <div class="flex p-3 h-full">
-                                        <div class="flex-none w-16 h-16 my-auto">
-                                            <img src="/images/monument.png" class="w-full object-cover md:h-full"
-                                                alt="question_img">
-                                        </div>
-                                        <div class="grow w-full h-auto my-auto p-2">
-                                            <div class="">
-                                                <p class="font-bold text-xs text-green-700">Monuments | National</p>
-                                                <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
-                                                <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
-                                            </div>
-                                        </div>
-                                        <div class="flex-none w-14 h-14 my-auto">
-                                            <div class="quiz_play_fwd_btn p-2">
-                                                <i class="fa-solid fa-chevron-right font-extrabold"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col m-2 h-auto w-full">
-                            <div class="q_tile h-auto ">
-                                <a href="/quizentry.html">
-                                    <div class="flex p-3 h-full">
-                                        <div class="flex-none w-16 h-16 my-auto">
-                                            <img src="/images/brand.png" class="w-full object-cover md:h-full"
-                                                alt="question_img">
-                                        </div>
-                                        <div class="grow w-full h-auto my-auto p-2">
-                                            <div class="">
-                                                <p class="font-bold text-xs text-green-700">Food Brands |
-                                                    Guess-that-brand
-                                                </p>
-                                                <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
-                                                <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
-                                            </div>
-                                        </div>
-                                        <div class="flex-none w-14 h-14 my-auto">
-                                            <div class="quiz_play_fwd_btn p-2">
-                                                <i class="fa-solid fa-chevron-right font-extrabold"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col m-2 h-auto w-full">
-                            <div class="q_tile h-auto ">
-                                <a href="/quizentry.html">
-                                    <div class="flex p-3 h-full">
-                                        <div class="flex-none w-16 h-16 my-auto">
-                                            <img src="/images/testknow.png" class="w-full object-cover md:h-full"
-                                                alt="question_img">
-                                        </div>
-                                        <div class="grow w-full h-auto my-auto p-2">
-                                            <div class="">
-                                                <p class="font-bold text-xs text-green-700">Knowledge | Easy-Trivia</p>
-                                                <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
-                                                <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
-                                                        class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
-                                            </div>
-                                        </div>
-                                        <div class="flex-none w-14 h-14 my-auto">
-                                            <div class="quiz_play_fwd_btn p-2">
-                                                <i class="fa-solid fa-chevron-right font-extrabold"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
+                <div class=" grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-0 lg:gap-0 ">
+                    <!-- Logo section -->
+                    <div class="col-auto p-1">
+                        <a href="/home.html">
+                            <img src="/images/logo.png" alt="Logo" class="px-2">
+                        </a>
+                    </div>
+                    <!-- Lottie animation for reward ad -->
+                    <div class="flex justify-end items-center col-span-3">
+                        <div onclick="RewardAd()" id="lottie-container" class="inline-block"
+                            style="width: 40px; height: 40px;">
+                            <img src="/images/Reward.png" alt="Reward">
                         </div>
                     </div>
-                    <!-- Subcategories section -->
-                    <div class="first_layer_home text-center p-3">
-                        <div class="row" id="sub_categories">
-                            <!-- Subcategories content will be dynamically inserted here -->
-                        </div>
+                    <!-- User wallet display -->
+                    <div
+                        class="user_wallet text-sm font-semibold text-green-800 flex justify-end items-center col-end-6 mr-3">
+                        <span class="rounded-full px-3 me-2"><strong id="total_coins"></strong> <i
+                                class="fa-solid fa-coins" style="color: #FFD43B;"></i> </span>
                     </div>
                 </div>
             </div>
+            <!-- Categories section -->
+            <div class="first_layer_home text-center p-2 mt-3">
+                <div class="row" id="sub_categories">
+                    <!-- Here's subcategoyr content -->
+                    <div class="col m-2 h-auto w-full">
+                        <div class="q_tile h-auto ">
+                            <a href="/quizentry.html">
+                                <div class="flex p-3 h-full">
+                                    <div class="flex-none w-16 h-16 my-auto">
+                                        <img src="/images/vocab.png" class="w-full object-cover md:h-full"
+                                            alt="question_img">
+                                    </div>
+                                    <div class="grow w-full h-auto my-auto p-2">
+                                        <div class="">
+                                            <p class="font-bold text-xs text-green-700">Vocabulary |
+                                                English-Hindi-Translation</p>
+                                            <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
+                                            <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-none w-14 h-14 my-auto">
+                                        <div class="quiz_play_fwd_btn p-2">
+                                            <i class="fa-solid fa-chevron-right font-extrabold"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
 
-            <!-- Bottom navigation bar -->
-            <div class="sticky bottom-0">
-                <div
-                    class=" m-auto  left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 bottom_bar">
-                    <div class="grid h-full max-w-lg grid-cols-3 mx-auto">
-                        <!-- Category button -->
-                        <button type="button" onclick="window.location.href='/category.html'"
-                            class="inline-flex flex-col items-center justify-center font-medium px-5  dark:hover:bg-gray-800 group ">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M4 6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8C8.53043 4 9.03914 4.21071 9.41421 4.58579C9.78929 4.96086 10 5.46957 10 6V8C10 8.53043 9.78929 9.03914 9.41421 9.41421C9.03914 9.78929 8.53043 10 8 10H6C5.46957 10 4.96086 9.78929 4.58579 9.41421C4.21071 9.03914 4 8.53043 4 8V6ZM14 6C14 5.46957 14.2107 4.96086 14.5858 4.58579C14.9609 4.21071 15.4696 4 16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V8C20 8.53043 19.7893 9.03914 19.4142 9.41421C19.0391 9.78929 18.5304 10 18 10H16C15.4696 10 14.9609 9.78929 14.5858 9.41421C14.2107 9.03914 14 8.53043 14 8V6ZM4 16C4 15.4696 4.21071 14.9609 4.58579 14.5858C4.96086 14.2107 5.46957 14 6 14H8C8.53043 14 9.03914 14.2107 9.41421 14.5858C9.78929 14.9609 10 15.4696 10 16V18C10 18.5304 9.78929 19.0391 9.41421 19.4142C9.03914 19.7893 8.53043 20 8 20H6C5.46957 20 4.96086 19.7893 4.58579 19.4142C4.21071 19.0391 4 18.5304 4 18V16ZM14 16C14 15.4696 14.2107 14.9609 14.5858 14.5858C14.9609 14.2107 15.4696 14 16 14H18C18.5304 14 19.0391 14.2107 19.4142 14.5858C19.7893 14.9609 20 15.4696 20 16V18C20 18.5304 19.7893 19.0391 19.4142 19.4142C19.0391 19.7893 18.5304 20 18 20H16C15.4696 20 14.9609 19.7893 14.5858 19.4142C14.2107 19.0391 14 18.5304 14 18V16Z"
-                                    fill="#96D7AB" stroke="#96D7AB" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                            <span
-                                class="text-sm  dark:text-gray-400 text-green-900 font-bold dark:group-hover:text-blue-500">Category</span>
-                        </button>
-                        <!-- Home button -->
-                        <button type="button" onclick="window.location.href='/home.html'"
-                            class="inline-flex flex-col items-center justify-center font-medium px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 20 20"
-                                stroke="currentColor" stroke-width="2" stroke-linejoin="round">
-                                <path
-                                    d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z">
-                                </path>
-                            </svg>
-                            <span
-                                class="text-sm text-gray-500 dark:text-gray-400 dark:group-hover:text-blue-500">Home</span>
-                        </button>
-                        <!-- Profile button -->
-                        <button type="button" onclick="window.location.href='/profile.html'"
-                            class="inline-flex flex-col items-center justify-center font-medium px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="2">
-                                <path
-                                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                            <span
-                                class="text-sm text-gray-500 dark:text-gray-400  dark:group-hover:text-blue-500">Profile</span>
-                        </button>
+                    <div class="col m-2 h-auto w-full">
+                        <div class="q_tile h-auto ">
+                            <a href="/quizentry.html">
+                                <div class="flex p-3 h-full">
+                                    <div class="flex-none w-16 h-16 my-auto">
+                                        <img src="/images/sports.png" class="w-full object-cover md:h-full"
+                                            alt="question_img">
+                                    </div>
+                                    <div class="grow w-full h-auto my-auto p-2">
+                                        <div class="">
+                                            <p class="font-bold text-xs text-green-700">Sports | Cricket</p>
+                                            <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
+                                            <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-none w-14 h-14 my-auto">
+                                        <div class="quiz_play_fwd_btn p-2">
+                                            <i class="fa-solid fa-chevron-right font-extrabold"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col m-2 h-auto w-full">
+                        <div class="q_tile h-auto ">
+                            <a href="/quizentry.html">
+                                <div class="flex p-3 h-full">
+                                    <div class="flex-none w-16 h-16 my-auto">
+                                        <img src="/images/festival-min.png" class="w-full object-cover md:h-full"
+                                            alt="question_img">
+                                    </div>
+                                    <div class="grow w-full h-auto my-auto p-2">
+                                        <div class="">
+                                            <p class="font-bold text-xs text-green-700">Festivals | Onam</p>
+                                            <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
+                                            <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-none w-14 h-14 my-auto">
+                                        <div class="quiz_play_fwd_btn p-2">
+                                            <i class="fa-solid fa-chevron-right font-extrabold"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col m-2 h-auto w-full">
+                        <div class="q_tile h-auto ">
+                            <a href="/quizentry.html">
+                                <div class="flex p-3 h-full">
+                                    <div class="flex-none w-16 h-16 my-auto">
+                                        <img src="/images/math.png" class="w-full object-cover md:h-full"
+                                            alt="question_img">
+                                    </div>
+                                    <div class="grow w-full h-auto my-auto p-2">
+                                        <div class="">
+                                            <p class="font-bold text-xs text-green-700">Fun Maths | Easy-Math-Trivia</p>
+                                            <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
+                                            <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-none w-14 h-14 my-auto">
+                                        <div class="quiz_play_fwd_btn p-2">
+                                            <i class="fa-solid fa-chevron-right font-extrabold"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col m-2 h-auto w-full">
+                        <div class="q_tile h-auto ">
+                            <a href="/quizentry.html">
+                                <div class="flex p-3 h-full">
+                                    <div class="flex-none w-16 h-16 my-auto">
+                                        <img src="/images/grammar.png" class="w-full object-cover md:h-full"
+                                            alt="question_img">
+                                    </div>
+                                    <div class="grow w-full h-auto my-auto p-2">
+                                        <div class="">
+                                            <p class="font-bold text-xs text-green-700">English Grammar | Verb-Adverb
+                                            </p>
+                                            <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
+                                            <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-none w-14 h-14 my-auto">
+                                        <div class="quiz_play_fwd_btn p-2">
+                                            <i class="fa-solid fa-chevron-right font-extrabold"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col m-2 h-auto w-full">
+                        <div class="q_tile h-auto ">
+                            <a href="/quizentry.html">
+                                <div class="flex p-3 h-full">
+                                    <div class="flex-none w-16 h-16 my-auto">
+                                        <img src="/images/monument.png" class="w-full object-cover md:h-full"
+                                            alt="question_img">
+                                    </div>
+                                    <div class="grow w-full h-auto my-auto p-2">
+                                        <div class="">
+                                            <p class="font-bold text-xs text-green-700">Monuments | National</p>
+                                            <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
+                                            <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-none w-14 h-14 my-auto">
+                                        <div class="quiz_play_fwd_btn p-2">
+                                            <i class="fa-solid fa-chevron-right font-extrabold"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col m-2 h-auto w-full">
+                        <div class="q_tile h-auto ">
+                            <a href="/quizentry.html">
+                                <div class="flex p-3 h-full">
+                                    <div class="flex-none w-16 h-16 my-auto">
+                                        <img src="/images/brand.png" class="w-full object-cover md:h-full"
+                                            alt="question_img">
+                                    </div>
+                                    <div class="grow w-full h-auto my-auto p-2">
+                                        <div class="">
+                                            <p class="font-bold text-xs text-green-700">Food Brands | Guess-that-brand
+                                            </p>
+                                            <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
+                                            <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-none w-14 h-14 my-auto">
+                                        <div class="quiz_play_fwd_btn p-2">
+                                            <i class="fa-solid fa-chevron-right font-extrabold"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col m-2 h-auto w-full">
+                        <div class="q_tile h-auto ">
+                            <a href="/quizentry.html">
+                                <div class="flex p-3 h-full">
+                                    <div class="flex-none w-16 h-16 my-auto">
+                                        <img src="/images/testknow.png" class="w-full object-cover md:h-full"
+                                            alt="question_img">
+                                    </div>
+                                    <div class="grow w-full h-auto my-auto p-2">
+                                        <div class="">
+                                            <p class="font-bold text-xs text-green-700">Knowledge | Easy-Trivia</p>
+                                            <p class="font-bold mt-0 text-sm xs:text-xs">Play &amp; Win 1000 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i> Coins</p>
+                                            <p class="entry_fee text-xs m-auto mt-2 w-60">Entry Fee 50 <i
+                                                    class="fa-solid fa-coins" style="color: #FFD43B;"></i></p>
+                                        </div>
+                                    </div>
+                                    <div class="flex-none w-14 h-14 my-auto">
+                                        <div class="quiz_play_fwd_btn p-2">
+                                            <i class="fa-solid fa-chevron-right font-extrabold"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Subcategories section -->
+                <div class="first_layer_home text-center p-3">
+                    <div class="row" id="sub_categories">
+                        <!-- Subcategories content will be dynamically inserted here -->
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Bottom navigation bar -->
+        <div class="sticky bottom-0">
+            <div
+                class=" m-auto  left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600 bottom_bar">
+                <div class="grid h-full max-w-lg grid-cols-3 mx-auto">
+                    <!-- Category button -->
+                    <button type="button" onclick="window.location.href='/category.html'"
+                        class="inline-flex flex-col items-center justify-center font-medium px-5  dark:hover:bg-gray-800 group ">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M4 6C4 5.46957 4.21071 4.96086 4.58579 4.58579C4.96086 4.21071 5.46957 4 6 4H8C8.53043 4 9.03914 4.21071 9.41421 4.58579C9.78929 4.96086 10 5.46957 10 6V8C10 8.53043 9.78929 9.03914 9.41421 9.41421C9.03914 9.78929 8.53043 10 8 10H6C5.46957 10 4.96086 9.78929 4.58579 9.41421C4.21071 9.03914 4 8.53043 4 8V6ZM14 6C14 5.46957 14.2107 4.96086 14.5858 4.58579C14.9609 4.21071 15.4696 4 16 4H18C18.5304 4 19.0391 4.21071 19.4142 4.58579C19.7893 4.96086 20 5.46957 20 6V8C20 8.53043 19.7893 9.03914 19.4142 9.41421C19.0391 9.78929 18.5304 10 18 10H16C15.4696 10 14.9609 9.78929 14.5858 9.41421C14.2107 9.03914 14 8.53043 14 8V6ZM4 16C4 15.4696 4.21071 14.9609 4.58579 14.5858C4.96086 14.2107 5.46957 14 6 14H8C8.53043 14 9.03914 14.2107 9.41421 14.5858C9.78929 14.9609 10 15.4696 10 16V18C10 18.5304 9.78929 19.0391 9.41421 19.4142C9.03914 19.7893 8.53043 20 8 20H6C5.46957 20 4.96086 19.7893 4.58579 19.4142C4.21071 19.0391 4 18.5304 4 18V16ZM14 16C14 15.4696 14.2107 14.9609 14.5858 14.5858C14.9609 14.2107 15.4696 14 16 14H18C18.5304 14 19.0391 14.2107 19.4142 14.5858C19.7893 14.9609 20 15.4696 20 16V18C20 18.5304 19.7893 19.0391 19.4142 19.4142C19.0391 19.7893 18.5304 20 18 20H16C15.4696 20 14.9609 19.7893 14.5858 19.4142C14.2107 19.0391 14 18.5304 14 18V16Z"
+                                fill="#96D7AB" stroke="#96D7AB" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <span
+                            class="text-sm  dark:text-gray-400 text-green-900 font-bold dark:group-hover:text-blue-500">Category</span>
+                    </button>
+                    <!-- Home button -->
+                    <button type="button" onclick="window.location.href='/home.html'"
+                        class="inline-flex flex-col items-center justify-center font-medium px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 20 20"
+                            stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+                            <path
+                                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z">
+                            </path>
+                        </svg>
+                        <span
+                            class="text-sm text-gray-500 dark:text-gray-400 dark:group-hover:text-blue-500">Home</span>
+                    </button>
+                    <!-- Profile button -->
+                    <button type="button" onclick="window.location.href='/profile.html'"
+                        class="inline-flex flex-col items-center justify-center font-medium px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        <span
+                            class="text-sm text-gray-500 dark:text-gray-400  dark:group-hover:text-blue-500">Profile</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 

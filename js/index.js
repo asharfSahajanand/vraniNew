@@ -1,4 +1,5 @@
 // Your JavaScript code here
+
 // Initialize variables
 let currentQuestionIndex = 0; // Index to track current question
 let coin = 0; // Variable to store earned coins
@@ -133,33 +134,25 @@ function checkAnswer(selectedAnswer, index) {
 function nextQuestion() {
   resultElement.style.display = "none";
   currentQuestionIndex++;
-  document.getElementById("currentindex").innerText = currentQuestionIndex + 1;
+  let counting = currentQuestionIndex;
+  document.getElementById("currentindex").innerText = counting + 1;
 
+  // Show next question or end quiz if all questions are answered
   if (currentQuestionIndex < quizData.data.length) {
-    
-    // ✅ Har 2 questions ke baad interstitial dikhao
-    if (currentQuestionIndex % 2 === 0) {
-      showInterstitialAd(() => {
-        showQuestion(); // ad ke baad question dikhao
-      });
-    } else {
-      showQuestion();
-    }
-
+    showQuestion();
   } else {
-    // Quiz khatam — interstitial dikhao phir treasure popup
-    localStorage.setItem("quizcoin", coin.toString());
-    let totalCoins = parseInt(localStorage.getItem("totalcoin") || "0") + coin;
-    localStorage.setItem("totalcoin", totalCoins.toString());
-    localStorage.setItem("totalplayed", "0");
-    localStorage.setItem("is_played", "1");
-    localStorage.setItem("rewarded", "0");
+    // End of quiz: Store total coins in local storage and trigger treasureopen() function
+    quizContainer.innerHTML = `<input type="hidden" value="${coin}" id="coin">`;
+    let getcoin = document.getElementById("coin").value;
+    localStorage.setItem("coin", getcoin);
+    localStorage.setItem("totalcoin", getcoin)
+    localStorage.setItem("totalplayed", 0)
+    localStorage.setItem("is_played", 1);
+    localStorage.setItem("rewarded", 0);
 
-    // ✅ Quiz end pe interstitial phir treasure
-    showInterstitialAd(() => {
-      treasureopen();
-    });
+    treasureopen(); // Call function to handle end of quiz actions
   }
 }
+
 // Start the quiz when the script runs
 startQuiz();

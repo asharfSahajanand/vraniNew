@@ -3,19 +3,10 @@
 
 <head>
   <meta charset="UTF-8">
-  <!-- Google tag (gtag.js) -->
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-7EEBHF5QN5"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-7EEBHF5QN5');
-  </script> -->
   <!-- Viewport meta tag to ensure proper scaling on different devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Title of the web page -->
-  <title> vubi | Play Quiz game Learn & Gain Knowledge </title>
+  <title> Quizzigo | Play Quiz game Learn & Gain Knowledge </title>
   <!-- Favicon Of Site -->
   <link rel="shortcut icon" href="/images/quiz_favicon.png" type="image/x-icon">
   <!-- Link to Tailwind CSS for styling -->
@@ -26,8 +17,61 @@
   <link rel="stylesheet" href="/css/style.css">
   <!-- jQuery library -->
   <script src="/js/jquery-3.6.4.min.js"></script>
-  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
-  <script src="/js/ads.js"></script>
+  <style>
+    /* Reward button pulse animation */
+    @keyframes pulse-coin {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.18);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    #lottie-container {
+      animation: pulse-coin 2s ease-in-out infinite;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #lottie-container:active {
+      transform: scale(0.9);
+    }
+
+    /* Toast styles */
+    #toast-container .toast-item {
+      background: #1f1f1f;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(60px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1615420563101212"
+    data-overlays="bottom" crossorigin="anonymous"></script>
   <script>
     window.adsbygoogle = window.adsbygoogle || [];
     var afg = {};
@@ -59,12 +103,27 @@
       sound: 'off',
     });
   </script>
+
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MRF99376');</script>
+  <!-- End Google Tag Manager -->
 </head>
 
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRF99376" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
   <div>
     <!-- Container for toast notifications -->
-    <div id="toast-container" class="fixed top-5 right-5 space-y-4"></div>
+    <div id="toast-container" class="fixed top-5 right-5 space-y-4" style="z-index: 99999;"></div>
 
     <!-- Popup for "Not enough coins" message -->
     <div class="popup_model fixed flex justify-center items-center hidden" id="treasure-popup">
@@ -121,6 +180,14 @@
 
       <!-- Main content section -->
       <div class="fist_layer text-center p-3 mt-3">
+        <div style="width: 100%;">
+          <ins class="adsbygoogle my-5 ads-content" style="display:block; text-align:center;"
+            data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-1615420563101212"
+            data-ad-slot="4306431074"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
         <div class="row">
           <div class="col mt-10">
             <!-- Quiz details and play button -->
@@ -141,10 +208,6 @@
                   <li>Play quizzes, win coins, and gain knowledge!</li>
                 </ul>
               </div>
-            </div>
-            <!-- First ad slot -->
-            <div class="ads-box mb-4" style="min-height: 250px !important; display: block !important;">
-              <div id="ad-slot-1" class="ad-container w-full flex justify-center"></div>
             </div>
           </div>
         </div>
@@ -194,63 +257,78 @@
     </div>
   </div>
   <script>
-    function showToast(e) {
-      // Create the toast element
-      const toast = document.createElement('div');
-      toast.className = 'max-w-xs  border border-gray-200 p-4 rounded shadow-lg flex items-center space-x-4';
-      toast.innerHTML = `
-            <div class="flex-shrink-0">
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7 12l5 5L21 7" />
-              </svg>
-            </div>
-            <div>
-              <p class="text-sm font-semibold">${e.title}</p>
-              <p class="text-sm">${e.msg}</p>
-            </div>
-          `;
-      // Append the toast to the container
-      document.getElementById('toast-container').appendChild(toast);
-      // Automatically remove the toast after 3 seconds
-      setTimeout(() => {
-        toast.remove();
-      }, 3000);
+    // ─── Coin helpers ──────────────────────────────────────────────
+    function getCoins() {
+      return parseInt(localStorage.getItem('totalcoin') || '0', 10);
+    }
+    function addCoins(amount) {
+      const newTotal = getCoins() + amount;
+      localStorage.setItem('totalcoin', newTotal);
+      document.getElementById('total_coins').innerText = newTotal;
+      return newTotal;
     }
 
+    // Initialise display
+    document.getElementById('total_coins').innerText = getCoins();
 
+    // ─── Toast ─────────────────────────────────────────────────────
+    function showToast({ title, msg }) {
+      const toast = document.createElement('div');
+      toast.className = 'toast-item';
+      toast.innerHTML = `
+                <svg style="flex-shrink:0;width:20px;height:20px;color:#4ade80"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4M7 12l5 5L21 7"/>
+                </svg>
+                <div>
+                    <p style="font-weight:600;margin:0">${title}</p>
+                    <p style="margin:0;opacity:0.85">${msg}</p>
+                </div>`;
+      document.getElementById('toast-container').appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // ─── Reward Ad ─────────────────────────────────────────────────
     function RewardAd() {
+      // Fallback: if adBreak not loaded, just give coins
+      if (adBreak !== 'function') {
+        console.log("ksdlfjsk");
+
+        showToast({ title: 'Coins Not Added!', msg: 'Try Later (ad not available)' });
+        return;
+      }
+
       adBreak({
-        type: 'reward',           // The type of this placement
-        name: 'game_started',     // A descriptive name for this placement
-
-        beforeReward: (showAdFn) => {
-          console.log("beforeReward");
-          showAdFn(0); // Show the ad immediately
+        type: 'reward',
+        name: 'reward_coin',
+        beforeReward: function (showAdFn) {
+          showAdFn();
         },
-
-        adDismissed: () => {
-          console.log("adDismissed");
+        adDismissed: function () {
+          showToast({ title: 'Dismissed', msg: '🚫 Ad was dismissed — no coins awarded' });
         },
-
-        adViewed: () => {
-          console.log("adViewed");
+        adViewed: function () {
+          // fires when ad fully watched — coins awarded in adBreakDone
         },
-
-        adBreakDone: (placementInfo) => {
-          console.log(placementInfo.breakStatus);
-
-          if (placementInfo.breakStatus === "viewed") {
-            localStorage.totalcoin = 100;
-            showToast({ title: "Congratulation!", msg: "🥳 Reward Added" });
-
-          } else {
-            // 
-            showToast({ title: "Sorry!", msg: "🚫Reward Ad Not available" });
+        adBreakDone: function (placementInfo) {
+          console.log('breakStatus:', placementInfo.breakStatus);
+          if (placementInfo.breakStatus === 'viewed') {
+            addCoins(100);
+            showToast({ title: 'Congratulations!', msg: '🥳 +100 coins added!' });
+          } else if (
+            placementInfo.breakStatus === 'noAdPreloaded' ||
+            placementInfo.breakStatus === 'noAdAvailable' ||
+            placementInfo.breakStatus === 'frequencyCapped' ||
+            placementInfo.breakStatus === 'other'
+          ) {
+            // Fallback — reward anyway so user isn't frustrated
+            addCoins(100);
+            showToast({ title: 'Coins Not Added!', msg: 'Try Later (ad not available)' });
           }
-        },
+        }
       });
     }
-
   </script>
   <script src="/data/quezentry.js"></script>
   <script>

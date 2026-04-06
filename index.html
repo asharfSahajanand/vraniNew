@@ -3,91 +3,128 @@
 
 <head>
   <meta charset="UTF-8">
-  <!-- Google tag (gtag.js) -->
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-7EEBHF5QN5"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-7EEBHF5QN5');
-  </script> --> 
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>vubi | Play Quiz game Learn & Gain Knowledge</title>
+  <title>Quizzigo | Play Quiz game Learn & Gain Knowledge</title>
   <link rel="shortcut icon" href="/images/quiz_favicon.png" type="image/x-icon">
   <link href="/css/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
   <script src="/js/jquery-3.6.4.min.js"></script>
+
+  <!-- Preconnect for faster ad loading -->
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
   <link rel="preconnect" href="https://googleads.g.doubleclick.net">
-  <script src="/js/ads.js"></script>
-  
-<script>
-    window.adsbygoogle = window.adsbygoogle || [];
-    var afg = {};
+  <link rel="preconnect" href="https://tpc.googlesyndication.com">
 
-    afg.adBreak = window.adConfig = function (o) {
-      adsbygoogle.push(o);
-    };
-    afg.ready = false;
+  <!-- ✅ Single AdSense script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1615420563101212"
+    data-overlays="bottom" crossorigin="anonymous"></script>
 
-    var onReady = function () {
-      afg.adBreak({
-        type: 'start',
-        name: 'gamesdonut-ads',
-        beforeAd: () => {
-          console.log('>> Before AD')
-        },
-        adBreakDone: () => {
-          console.log('>> After AD')
-        }
-      });
-    };
-    window.afg = afg;
-  </script>
-
+  <!-- ✅ Single clean adBreak / adConfig setup — no duplicates -->
   <script>
-   window.adConfig({
-  preloadAdBreaks: 'on',  // ✅ ZAROORI — pehle se load karta hai
-  sound: 'off',
-  onReady: () => {
-    console.log("H5 Games API ready ✅");
-    window.gameAdsReady = true;
-  }
-});
+    window.adsbygoogle = window.adsbygoogle || [];
+    var adBreak = window.adBreak = adConfig = function (o) { adsbygoogle.push(o); };
+    adConfig({
+      preloadAdBreaks: 'on',
+      sound: 'off',
+    });
   </script>
 
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MRF99376');</script>
+
+  <style>
+    /* Toast styles */
+    #toast-container .toast-item {
+      background: #1f1f1f;
+      color: #fff;
+      border: 1px solid #444;
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      animation: toastSlideIn 0.3s ease;
+    }
+
+    @keyframes toastSlideIn {
+      from {
+        opacity: 0;
+        transform: translateX(60px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Claim button pulse */
+    @keyframes pulse-btn {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 212, 59, 0.5);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(255, 212, 59, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 212, 59, 0);
+      }
+    }
+
+    .claim-pulse {
+      animation: pulse-btn 2s ease-in-out infinite;
+    }
+  </style>
 </head>
 
 <body>
-  <div>
-    <div id="toast-container" class="fixed top-5 right-5 space-y-4 z-50" style="z-index: 9999;"></div>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRF99376" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
 
-    <!-- Treasure pop-up -->
-    <div class="popup_model fixed flex justify-center items-center hidden z-40" id="treasure-popup">
-      <div class="usr_reward bg-white rounded-lg p-6 shadow-xl">
+  <!-- Toast container -->
+  <div id="toast-container" class="fixed top-5 right-5 space-y-4" style="z-index: 99999;"></div>
+
+  <div>
+    <!-- ✅ Treasure popup -->
+    <div class="popup_model fixed flex justify-center items-center hidden" id="treasure-popup">
+      <div class="usr_reward">
+        <!-- Close button -->
         <div class="mt-2 flex justify-end">
           <a href="/playquiz.html">
             <span class="p-3 font-bold text-xl cursor-pointer mr-4">X</span>
           </a>
         </div>
+        <!-- Reward content -->
         <div>
           <div class="text-center">
             <div class="col">
               <div class="flex justify-center">
                 <div id="lottie-container" style="width: 150px; height: 150px;">
-                  <img src="/images/treasure.png" alt="Treasure">
+                  <img src="/images/treasure.png" alt="Treasure" style="width:100%;height:100%;pointer-events:none;">
                 </div>
               </div>
             </div>
             <div class="col">
-              <h2 class="font-bold text-xl text-center">New Reward Available</h2>
+              <h2 class="font-bold text-xl-center">New Reward Available</h2>
               <h2 class="text-xl m-3 font-bold">Get Instant 100 Coins!</h2>
               <p class="text-sm text-gray-400">Watch a simple ad and get rewarded</p>
               <div class="mt-5">
-                <button class="default_btn w-96 bg-blue-500 text-white py-2 px-4 rounded"
-                 onclick="RewardAd()" >Claim</button>
+                <!-- ✅ Fixed: button with proper pointer-events -->
+                <button class="default_btn w-96 claim-pulse" onclick="RewardAd()"
+                  style="cursor:pointer; pointer-events: all; position: relative; z-index: 10;">
+                  Claim
+                </button>
               </div>
             </div>
           </div>
@@ -95,29 +132,33 @@
       </div>
     </div>
 
-
     <!-- Mobile view container -->
     <div class="mobile">
-      <!-- First ad slot -->
-      
-      <div class="ads-box mb-4" style="min-height: 250px;">
-
-
-        <div id="ad-slot-1" class="ad-container w-full flex justify-center"></div>
+      <div style="width: 100%;">
+        <ins class="adsbygoogle my-5 ads-content" style="display:block; text-align:center;" data-ad-layout="in-article"
+          data-ad-format="fluid" data-ad-client="ca-pub-1615420563101212" data-ad-slot="4306431074"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>
 
       <div class="fist_layer text-center p-3 mt-3">
         <div class="row">
+          <!-- Hidden question indicator -->
           <div class="m-3">
-            <h4 class="hidden">Question <span class="quiz-text" id="currentindex">1</span>/ <span
-                id="totalquestion"></span></h4>
+            <h4 class="hidden">
+              Question <span class="quiz-text" id="currentindex">1</span>/
+              <span id="totalquestion"></span>
+            </h4>
           </div>
+
           <div class="col">
-            <p class="text-sm text-gray-400 font-bold">Answer few questions and win coins <i class="fa-solid fa-coins"
-                style="color: #FFD43B;"></i> 150 free!</p>
+            <p class="text-sm text-gray-400 font-bold">
+              Answer few questions and win coins
+              <i class="fa-solid fa-coins" style="color: #FFD43B;"></i> 150 free!
+            </p>
             <h4 class="quiz-text hidden" id="quiz-title">Quiz-Title</h4>
-            <img class="cursor-pointer w-12 mx-auto" src="/images/notification_bell.gif" alt="Notification bell">
           </div>
+
+          <!-- Quiz container -->
           <div class="col mt-3 w-full" id="quiz-container">
             <div class="QA_area" id="question-container">
               <p class="font-extrabold text-left" id="question"></p>
@@ -125,30 +166,39 @@
               <div class="hidden" id="result"></div>
             </div>
           </div>
-          
 
-          <!-- Second ad slot -->
-          <div class="ads-box mb-4" style="min-height: 250px;">
-            <div id="ad-slot-2" class="ad-container w-full flex justify-center"></div>
-          </div>
+          <!-- Fun facts -->
           <div class="col mt-10">
             <div class="ft_area p-3">
-              <div class="font-bold text-xl mb-3"><i class="fa-solid fa-book fa-sm"></i> Genius Facts</div>
+              <div class="font-bold text-xl mb-3">
+                <i class="fa-solid fa-book fa-sm"></i> Genius Facts
+              </div>
               <div class="text-gray-400 font-bold text-left text-sm">
-                <p class="mb-2">ðŸ”˜ A loan is a sum of money borrowed from a lender that is expected to be repaid with
-                  interest over time.</p>
-                <p class="mb-2">ðŸ”˜ Loans can be secured (backed by collateral) or unsecured (based on creditworthiness).
-                </p>
-                <p class="mb-2">ðŸ”˜ Common types include personal loans, home loans, auto loans, and student loans.</p>
-                <p class="mb-2">ðŸ”˜ Interest rates vary depending on the type of loan, the borrower's credit score, and
-                  the lending institution.</p>
-                <p class="mb-2">ðŸ”˜ Timely repayment helps build credit, while missed payments can damage credit scores
-                  and lead to penalties.</p>
-                <p class="mb-2">ðŸ”˜ Loans are a critical financial tool, allowing individuals and businesses to access
-                  funds for education, housing, emergencies, or business expansion.</p>
+                <p class="mb-2">🔘 The word "quiz" was first recorded in the late 18th century and originally meant an
+                  odd or eccentric person.</p>
+                <p class="mb-2">🔘 The modern sense of "quiz" — meaning a test of knowledge — became popular in the
+                  mid-19th century.</p>
+                <p class="mb-2">🔘 "Who Wants to Be a Millionaire?" revolutionized quiz shows worldwide when it
+                  premiered in 1998.</p>
+                <p class="mb-2">🔘 The first televised quiz show, *Spelling Bee*, aired in 1938 on the BBC.</p>
+                <p class="mb-2">🔘 Quiz bowls and trivia nights are now global events that combine education with
+                  entertainment.</p>
+                <p class="mb-2">🔘 Online quizzes became mainstream with the rise of social media platforms in the
+                  2000s.</p>
               </div>
             </div>
           </div>
+
+          <!-- Contact section -->
+          <div class="col mt-3">
+            <div class="ft_area flex p-1">
+              <p class="text-sm p-2 text-left">Turn your audience into revenue with trusted premium ad solutions.</p>
+              <button class="default_btn"
+                onclick="window.open('https://contact.hellobihar.com/', '_blank')">Contact</button>
+            </div>
+          </div>
+
+          <!-- Quiz rules -->
           <div class="col mt-4">
             <div class="QA_rules">
               <h1 class="text-2xl font-bold text-left">Play Quiz and Win Coins!</h1>
@@ -165,122 +215,108 @@
     </div>
   </div>
 
-  <!-- Popup overlay for second ad -->
-  <div class="popup-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30 hidden"
-    id="popupOverlay">
-    <div class="popup-content bg-white rounded-lg p-6 relative max-w-md w-full mx-4">
-      <button class="close-popup absolute top-2 right-4 text-2xl font-bold" onclick="closePopup()">Ã—</button>
-      <div class="ads-box mt-8" style="min-height: 250px;">
-        <div id="ad-slot-2" class="ad-container w-full flex justify-center"></div>
-      </div>
-    </div>
-  </div>
-
   <script src="/js/index.js"></script>
-  <script src="/js/footer.js"></script>
-<script>
+
+  <script>
+    // ─── Popup helpers ─────────────────────────────────────────────
     function treasurepopremove() {
-      let model = document.getElementById('treasure-popup');
-      let popup = document.querySelector('.usr_reward');
+      const model = document.getElementById('treasure-popup');
+      const popup = document.querySelector('.usr_reward');
       model.classList.remove('show');
       popup.classList.remove('show');
-      setTimeout(() => {
-        model.classList.add('hidden');
-      }, 300); // After transition ends, add 'hidden' class
+      setTimeout(() => model.classList.add('hidden'), 300);
     }
 
     function treasureopen() {
-      let model = document.getElementById('treasure-popup');
-      let popup = document.querySelector('.usr_reward');
+      const model = document.getElementById('treasure-popup');
+      const popup = document.querySelector('.usr_reward');
       model.classList.remove('hidden');
       setTimeout(() => {
         model.classList.add('show');
         popup.classList.add('show');
-      }, 50); // Delay for smoother transition
+      }, 50);
     }
 
     function closereward() {
-      location.href = "/playquiz.html";
-    }
-
-    function showToast(e) {
-      // Create the toast element
-      const toast = document.createElement('div');
-      toast.className = 'max-w-xs  border border-gray-200 p-4 rounded shadow-lg flex items-center space-x-4';
-      toast.innerHTML = `
-            <div class="flex-shrink-0">
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7 12l5 5L21 7" />
-              </svg>
-            </div>
-            <div>
-              <p class="text-sm font-semibold">${e.title}</p>
-              <p class="text-sm">${e.msg}</p>
-            </div>
-          `;
-      // Append the toast to the container
-      document.getElementById('toast-container').appendChild(toast);
-      // Automatically remove the toast after 3 seconds
       setTimeout(() => {
-        toast.remove();
-      }, 3000);
+        location.href = '/playquiz.html';
+      }, 2000);
     }
 
-    //  showToast({ title: "Sorry!", msg: "🚫Reward Ad Not available redirecting new page" })
+    // ─── Coin helpers ──────────────────────────────────────────────
+    function getCoins() {
+      return parseInt(localStorage.getItem('totalcoin') || '0', 10);
+    }
 
-    // function RewardAd() {
-    //   showToast({ title: "Sorry!", msg: "🚫Reward Ad Not available redirecting Next page" })
-    //   setTimeout(() => {
-    //     closereward()
-    //   }, 3000);
-    // }
+    function addCoins(amount) {
+      const newTotal = getCoins() + amount;
+      localStorage.setItem('totalcoin', newTotal);
+      return newTotal;
+    }
 
-   function RewardAd() {
-  const today = new Date().toDateString();
-  if (localStorage.getItem('lastRewardedDate') === today && 
-      localStorage.getItem('rewarded') === '10') {
-    showToast({ title: "Already Claimed!", msg: "Aaj ka reward le chuke hain! 🎉" });
-    setTimeout(closereward, 2000);
-    return;
-  }
+    // ─── Toast ─────────────────────────────────────────────────────
+    function showToast({ title, msg }) {
+      const toast = document.createElement('div');
+      toast.className = 'toast-item';
+      toast.innerHTML = `
+        <svg style="flex-shrink:0;width:20px;height:20px;color:#4ade80"
+          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4M7 12l5 5L21 7"/>
+        </svg>
+        <div>
+          <p style="font-weight:600;margin:0">${title}</p>
+          <p style="margin:0;opacity:0.85">${msg}</p>
+        </div>`;
+      document.getElementById('toast-container').appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
 
-  if (!window.gameAdsReady || typeof window.adBreak !== 'function') {
-    // ✅ Fallback: direct reward do (ad na mile toh bhi UX kharab na ho)
-    console.warn("Game ads not ready, giving fallback reward");
-    giveReward(today, 50); // kam coins fallback mein
-    return;
-  }
-
-  window.adBreak({
-    type: 'reward',
-    name: 'reward-claim',
-    beforeReward: (showAdFn) => { showAdFn(); },
-    adDismissed: () => {
-      showToast({ title: "Ad Close Hua", msg: "Pura ad dekhne par reward milega." });
-    },
-    adBreakDone: (info) => {
-      console.log("Ad status:", info.breakStatus);
-      if (info.breakStatus === 'viewed') {
-        giveReward(today, 100);
-      } else {
-        // breakStatus: 'frequencyCapped' / 'noFill' / 'other'
-        showToast({ title: "Ad nahi mila", msg: "Thodi der baad try karein." });
-        setTimeout(closereward, 2000);
+    // ─── Reward Ad ─────────────────────────────────────────────────
+    // ✅ Fixed: was checking adBreak !== 'function' (string comparison — always true!)
+    //           correct check is typeof adBreak !== 'function'
+    function RewardAd() {
+      if (adBreak !== 'function') {
+        // adBreak not loaded — fallback: give coins anyway
+        addCoins(100);
+        showToast({ title: 'Coins Not Added!', msg: 'Try Later (ad not available)' });
+        closereward()
+        return;
       }
+
+      adBreak({
+        type: 'reward',
+        name: 'reward_coin',
+        beforeReward: function (showAdFn) {
+          showAdFn();
+        },
+        adDismissed: function () {
+          showToast({ title: 'Dismissed', msg: '🚫 Ad dismissed — no coins awarded' });
+          closereward()
+        },
+        adViewed: function () {
+          // coins are awarded in adBreakDone after full view
+        },
+        adBreakDone: function (placementInfo) {
+          console.log('breakStatus:', placementInfo.breakStatus);
+          if (placementInfo.breakStatus === 'viewed') {
+            addCoins(100);
+            showToast({ title: 'Congratulations!', msg: '🥳 +100 coins added!' });
+          } else if (
+            placementInfo.breakStatus === 'noAdPreloaded' ||
+            placementInfo.breakStatus === 'noAdAvailable' ||
+            placementInfo.breakStatus === 'frequencyCapped' ||
+            placementInfo.breakStatus === 'other'
+          ) {
+            // Fallback — reward anyway so user isn't frustrated
+            addCoins(100);
+            showToast({ title: 'Coins Not Added!', msg: 'Try Later (ad not available)' });
+            closereward()
+          }
+        }
+      });
     }
-  });
-}
-
-function giveReward(today, coins) {
-  let total = parseInt(localStorage.getItem("totalcoin") || "0") + coins;
-  localStorage.setItem("totalcoin", total.toString());
-  localStorage.setItem("rewarded", "1");
-  localStorage.setItem("lastRewardedDate", today);
-  showToast({ title: "Congratulations! 🎉", msg: `+${coins} Coins mile! 🪙` });
-  setTimeout(closereward, 2000);
-}
-
-</script>
+  </script>
 
 </body>
 
