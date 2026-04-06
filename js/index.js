@@ -140,14 +140,13 @@ function nextQuestion() {
   if (currentQuestionIndex < quizData.data.length) {
     showQuestion();
   } else {
-    // End of quiz: Store total coins in local storage and trigger treasureopen() function
-    quizContainer.innerHTML = `<input type="hidden" value="${coin}" id="coin">`;
-    let getcoin = document.getElementById("coin").value;
-    localStorage.setItem("coin", getcoin);
-    localStorage.setItem("totalcoin", getcoin)
-    localStorage.setItem("totalplayed", 0)
-    localStorage.setItem("is_played", 1);
-    localStorage.setItem("rewarded", 0);
+    // End of quiz: Store quiz coins separately and trigger treasureopen() function
+    localStorage.setItem("quizcoin", coin.toString());
+    let totalCoins = (parseInt(localStorage.getItem("totalcoin") || "0") + coin);
+    localStorage.setItem("totalcoin", totalCoins.toString());
+    localStorage.setItem("totalplayed", "0");
+    localStorage.setItem("is_played", "1");
+    localStorage.setItem("rewarded", "0"); // Reset rewarded flag for this session
 
     treasureopen(); // Call function to handle end of quiz actions
   }
