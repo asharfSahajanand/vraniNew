@@ -27,7 +27,37 @@
     <!-- jQuery library -->
     <script src="/js/jquery-3.6.4.min.js"></script>
 
+<script>
+    window.adsbygoogle = window.adsbygoogle || [];
+    var afg = {};
 
+    afg.adBreak = window.adConfig = function (o) {
+      adsbygoogle.push(o);
+    };
+    afg.ready = false;
+
+    var onReady = function () {
+      afg.adBreak({
+        type: 'start',
+        name: 'gamesdonut-ads',
+        beforeAd: () => {
+          console.log('>> Before AD')
+        },
+        adBreakDone: () => {
+          console.log('>> After AD')
+        }
+      });
+    };
+    window.afg = afg;
+  </script>
+
+  <script>
+    window.adsbygoogle = window.adsbygoogle || []; var adBreak = adConfig = function (o) { adsbygoogle.push(o); }
+    adConfig({
+      preloadAdBreaks: 'on',
+      sound: 'off',
+    });
+  </script>
 
 </head>
 
