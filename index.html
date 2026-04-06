@@ -48,11 +48,14 @@
   </script>
 
   <script>
-    window.adsbygoogle = window.adsbygoogle || []; var adBreak = adConfig = function (o) { adsbygoogle.push(o); }
-    adConfig({
-      preloadAdBreaks: 'on',
-      sound: 'off',
-    });
+   window.adConfig({
+  preloadAdBreaks: 'on',  // ✅ ZAROORI — pehle se load karta hai
+  sound: 'off',
+  onReady: () => {
+    console.log("H5 Games API ready ✅");
+    window.gameAdsReady = true;
+  }
+});
   </script>
 
 </head>
@@ -232,93 +235,52 @@
     //   }, 3000);
     // }
 
-    function RewardAd() {
-      // Check if already rewarded today (first-click only logic)
-      const today = new Date().toDateString();
-      const lastRewardedDate = localStorage.getItem('lastRewardedDate');
-      if (lastRewardedDate === today && localStorage.getItem('rewarded') === '1') {
-        showToast({ title: "Already Claimed!", msg: "You already claimed reward today! 🎉" });
+   function RewardAd() {
+  const today = new Date().toDateString();
+  if (localStorage.getItem('lastRewardedDate') === today && 
+      localStorage.getItem('rewarded') === '10') {
+    showToast({ title: "Already Claimed!", msg: "Aaj ka reward le chuke hain! 🎉" });
+    setTimeout(closereward, 2000);
+    return;
+  }
+
+  if (!window.gameAdsReady || typeof window.adBreak !== 'function') {
+    // ✅ Fallback: direct reward do (ad na mile toh bhi UX kharab na ho)
+    console.warn("Game ads not ready, giving fallback reward");
+    giveReward(today, 50); // kam coins fallback mein
+    return;
+  }
+
+  window.adBreak({
+    type: 'reward',
+    name: 'reward-claim',
+    beforeReward: (showAdFn) => { showAdFn(); },
+    adDismissed: () => {
+      showToast({ title: "Ad Close Hua", msg: "Pura ad dekhne par reward milega." });
+    },
+    adBreakDone: (info) => {
+      console.log("Ad status:", info.breakStatus);
+      if (info.breakStatus === 'viewed') {
+        giveReward(today, 100);
+      } else {
+        // breakStatus: 'frequencyCapped' / 'noFill' / 'other'
+        showToast({ title: "Ad nahi mila", msg: "Thodi der baad try karein." });
         setTimeout(closereward, 2000);
-        return;
       }
-
-      // Show loader
-      showLoader();
-      console.log("RewardAd initiated - attempting rewarded ad");
-
-      adBreak({
-        type: 'reward',
-        name: 'reward-claim',
-
-        beforeReward: (showAdFn) => {
-          console.log("Before reward ad");
-          showAdFn(0);
-        },
-
-        adDismissed: () => {
-          console.log("Ad dismissed");
-          hideLoader();
-        },
-
-        adViewed: () => {
-          console.log("Ad viewed");
-        },
-
-        adBreakDone: (placementInfo) => {
-          console.log("Ad break done:", placementInfo.breakStatus);
-          hideLoader();
-
-          if (placementInfo.breakStatus === "viewed") {
-            // Credit reward coins
-            const rewardCoins = 100;
-            let total = parseInt(localStorage.getItem("totalcoin") || "0") + rewardCoins;
-            localStorage.setItem("totalcoin", total.toString());
-            localStorage.setItem("rewarded", "1");
-            localStorage.setItem('lastRewardedDate', today);
-            console.log("Reward credited:", rewardCoins, "Total coins:", total);
-            showToast({ title: "Congratulations! 🎉", msg: `🥳 +${rewardCoins} Reward Coins Added!` });
-            setTimeout(closereward, 2000);
-          } else {
-            console.log("Reward ad failed, trying GPT fallback");
-            // Fallback to GPT rewarded ad
-            tryGPTFallback();
-          }
-        },
-      });
     }
+  });
+}
 
-    function tryGPTFallback() {
-      console.log("GPT rewarded fallback");
-      // Simplified GPT-like call (adapt from footer.js if needed)
-      showToast({ title: "Fallback Active", msg: "Loading alternate reward ad..." });
-      // Simulate success for testing (replace with real GPT)
-      setTimeout(() => {
-        const rewardCoins = 100;
-        let total = parseInt(localStorage.getItem("totalcoin") || "0") + rewardCoins;
-        localStorage.setItem("totalcoin", total.toString());
-        localStorage.setItem("rewarded", "1");
-        localStorage.setItem('lastRewardedDate', today);
-        showToast({ title: "Reward Credited! 🥳", msg: `+${rewardCoins} Coins Added!` });
-        setTimeout(closereward, 2000);
-      }, 2000);
-    }
+function giveReward(today, coins) {
+  let total = parseInt(localStorage.getItem("totalcoin") || "0") + coins;
+  localStorage.setItem("totalcoin", total.toString());
+  localStorage.setItem("rewarded", "1");
+  localStorage.setItem("lastRewardedDate", today);
+  showToast({ title: "Congratulations! 🎉", msg: `+${coins} Coins mile! 🪙` });
+  setTimeout(closereward, 2000);
+}
 
-    function showLoader() {
-      // Simple loader - can enhance with spinner
-      showToast({ title: "Loading...", msg: "Please wait for reward ad..." });
-    }
-
-    function hideLoader() {
-      // Remove loader toasts if needed
-      const toasts = document.querySelectorAll('#toast-container div');
-      toasts.forEach(toast => {
-        if (toast.textContent.includes('Loading')) toast.remove();
-      });
-    }
-
-  </script>
-
-
+</script>
 
 </body>
 

@@ -133,24 +133,33 @@ function checkAnswer(selectedAnswer, index) {
 function nextQuestion() {
   resultElement.style.display = "none";
   currentQuestionIndex++;
-  let counting = currentQuestionIndex;
-  document.getElementById("currentindex").innerText = counting + 1;
+  document.getElementById("currentindex").innerText = currentQuestionIndex + 1;
 
-  // Show next question or end quiz if all questions are answered
   if (currentQuestionIndex < quizData.data.length) {
-    showQuestion();
+    
+    // ✅ Har 2 questions ke baad interstitial dikhao
+    if (currentQuestionIndex % 2 === 0) {
+      showInterstitialAd(() => {
+        showQuestion(); // ad ke baad question dikhao
+      });
+    } else {
+      showQuestion();
+    }
+
   } else {
-    // End of quiz: Store quiz coins separately and trigger treasureopen() function
+    // Quiz khatam — interstitial dikhao phir treasure popup
     localStorage.setItem("quizcoin", coin.toString());
-    let totalCoins = (parseInt(localStorage.getItem("totalcoin") || "0") + coin);
+    let totalCoins = parseInt(localStorage.getItem("totalcoin") || "0") + coin;
     localStorage.setItem("totalcoin", totalCoins.toString());
     localStorage.setItem("totalplayed", "0");
     localStorage.setItem("is_played", "1");
-    localStorage.setItem("rewarded", "0"); // Reset rewarded flag for this session
+    localStorage.setItem("rewarded", "0");
 
-    treasureopen(); // Call function to handle end of quiz actions
+    // ✅ Quiz end pe interstitial phir treasure
+    showInterstitialAd(() => {
+      treasureopen();
+    });
   }
 }
-
 // Start the quiz when the script runs
 startQuiz();

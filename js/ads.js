@@ -2,8 +2,30 @@ const script = document.createElement("script");
 script.async = true;
 script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1615420563101212";
 script.crossOrigin = "anonymous";
-
 document.head.appendChild(script);
+
+// ✅ H5 Games API — reward ad ke liye ZAROORI hai
+const gameScript = document.createElement("script");
+gameScript.async = true;
+gameScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1615420563101212";
+gameScript.setAttribute("data-ad-frequency-hint", "30s");
+document.head.appendChild(gameScript);
+
+// ✅ adConfig PEHLE setup karo — adBreak se pehle
+window.adsbygoogle = window.adsbygoogle || [];
+window.adBreak = window.adConfig = function(o) {
+  window.adsbygoogle.push(o);
+};
+
+// ✅ Game ads initialize karo
+window.adConfig({
+  preloadAdBreaks: 'on',
+  sound: 'off',
+  onReady: () => {
+    console.log("H5 Games API ready ✅");
+    window.gameAdsReady = true;
+  }
+});
 
 (function () {
 
@@ -104,5 +126,30 @@ document.head.appendChild(script);
   window.addEventListener("beforeunload", () => {
     if (refreshTimer) clearInterval(refreshTimer);
   });
+// Existing code ke saath yeh add karo
 
+// ✅ Interstitial Ad function
+window.showInterstitialAd = function(onComplete) {
+  if (!window.gameAdsReady || typeof window.adBreak !== 'function') {
+    console.warn("Interstitial: Game ads not ready, skipping");
+    if (onComplete) onComplete(); // skip karke aage badho
+    return;
+  }
+
+  window.adBreak({
+    type: 'next',           // ✅ interstitial ke liye 'next' use karo
+    name: 'between-questions',
+    beforeAd: () => {
+      console.log("Interstitial: showing...");
+    },
+    afterAd: () => {
+      console.log("Interstitial: done");
+      if (onComplete) onComplete(); // ad ke baad aage badho
+    },
+    adBreakDone: (info) => {
+      console.log("Interstitial status:", info.breakStatus);
+      if (onComplete) onComplete();
+    }
+  });
+};
 })();
