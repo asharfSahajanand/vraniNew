@@ -3,40 +3,11 @@
 // Initialize variables
 let currentQuestionIndex = 0; // Index to track current question
 let coin = 0; // Variable to store earned coins
-let quizjson = `[
-  {"q_id":1582,"question":"What did Rachel's dad gift her when she was 15?","answer":"Pony,Shopping mall,Boat,2 Kittens","correct":"Boat","time":"1652710530","coins":100,"sc_id":6,"title":"Friends","c_id":9,"c_name":"Entertainment","c_img":"entertainment.png","sc_img":"entertainment.png","totalprice":10000,"entryFee":50,"live":1},
-  {"q_id":1751,"question":"Guess the Hindi movie title: Shrimaan Bharat","answer":"Bharat,Mr. India,Shrimaan,The Great Bharat","correct":"Mr. India","time":"1652710530","coins":100,"sc_id":18,"title":"Guess-The-Movie","c_id":9,"c_name":"Entertainment","c_img":"entertainment.png","sc_img":"entertainment.png","totalprice":10000,"entryFee":50,"live":1},
-  {"q_id":1583,"question":"Which character in Friends worked as a masseuse?","answer":"Rachel,Monica,Phoebe,Ross","correct":"Phoebe","time":"1652710530","coins":100,"sc_id":6,"title":"Friends","c_id":9,"c_name":"Entertainment","c_img":"entertainment.png","sc_img":"entertainment.png","totalprice":10000,"entryFee":50,"live":1},
-  {"q_id":1584,"question":"What is the name of Ross's pet monkey?","answer":"Marcel,Charlie,Ben,Joey","correct":"Marcel","time":"1652710530","coins":100,"sc_id":6,"title":"Friends","c_id":9,"c_name":"Entertainment","c_img":"entertainment.png","sc_img":"entertainment.png","totalprice":10000,"entryFee":50,"live":1},
-  {"q_id":1585,"question":"Which Bollywood movie features the song 'Jai Ho'?","answer":"3 Idiots,Slumdog Millionaire,Dangal,Lagaan","correct":"Slumdog Millionaire","time":"1652710530","coins":100,"sc_id":18,"title":"Bollywood","c_id":9,"c_name":"Entertainment","c_img":"entertainment.png","sc_img":"entertainment.png","totalprice":10000,"entryFee":50,"live":1},
-  {"q_id":1586,"question":"Who directed the movie 'Inception'?","answer":"Steven Spielberg,Christopher Nolan,Martin Scorsese,Quentin Tarantino","correct":"Christopher Nolan","time":"1652710530","coins":100,"sc_id":18,"title":"Movies","c_id":9,"c_name":"Entertainment","c_img":"entertainment.png","sc_img":"entertainment.png","totalprice":10000,"entryFee":50,"live":1},
-  {"q_id":1587,"question":"Which planet is known as the Red Planet?","answer":"Venus,Jupiter,Mars,Saturn","correct":"Mars","time":"1652710530","coins":100,"sc_id":20,"title":"Science","c_id":10,"c_name":"General Knowledge","c_img":"science.png","sc_img":"science.png","totalprice":10000,"entryFee":50,"live":1},
-  {"q_id":1588,"question":"What is the capital of Australia?","answer":"Sydney,Melbourne,Canberra,Perth","correct":"Canberra","time":"1652710530","coins":100,"sc_id":21,"title":"Geography","c_id":10,"c_name":"General Knowledge","c_img":"geography.png","sc_img":"geography.png","totalprice":10000,"entryFee":50,"live":1},
-  {"q_id":1589,"question":"Who painted the Mona Lisa?","answer":"Vincent van Gogh,Pablo Picasso,Leonardo da Vinci,Michelangelo","correct":"Leonardo da Vinci","time":"1652710530","coins":100,"sc_id":22,"title":"Art","c_id":11,"c_name":"Culture","c_img":"art.png","sc_img":"art.png","totalprice":10000,"entryFee":50,"live":1},
-  {"q_id":1590,"question":"What is the largest mammal in the world?","answer":"African Elephant,Blue Whale,Giraffe,Hippopotamus","correct":"Blue Whale","time":"1652710530","coins":100,"sc_id":23,"title":"Animals","c_id":12,"c_name":"Nature","c_img":"animals.png","sc_img":"animals.png","totalprice":10000,"entryFee":50,"live":1},
-  {"q_id":1591,"question":"Which programming language is known as the 'language of the web'?","answer":"Python,Java,JavaScript,C++","correct":"JavaScript","time":"1652710530","coins":100,"sc_id":24,"title":"Programming","c_id":13,"c_name":"Technology","c_img":"tech.png","sc_img":"tech.png","totalprice":10000,"entryFee":50,"live":1},
-  {"q_id":1592,"question":"In which year did World War II end?","answer":"1943,1944,1945,1946","correct":"1945","time":"1652710530","coins":100,"sc_id":25,"title":"History","c_id":14,"c_name":"History","c_img":"history.png","sc_img":"history.png","totalprice":10000,"entryFee":50,"live":1}
-]`;
-
-// Parse quiz data into JSON format and randomly select 2 questions
-const allQuizData = JSON.parse(quizjson);
-const selectedQuestions = getRandomQuestions(allQuizData, 2);
+let quizjson = `[{"q_id":1645,"question":"Who was the maid of honor at Monica's wedding?","answer":"Rachel,Phoebe,Janice,Judy","correct":"Rachel","time":"1652710530","coins":100,"sc_id":36,"title":"Hollywood","c_id":9,"c_name":"Entertainment","c_img":"entertainment.png","sc_img":"entertainment.png","totalprice":10000,"entryFee":50,"live":1},{"q_id":1582,"question":"What did Rachel's dad gift her when she was 15?","answer":"Pony,Shopping mall,Boat,2 Kittens","correct":"Boat","time":"1652710530","coins":100,"sc_id":6,"title":"Friends","c_id":9,"c_name":"Entertainment","c_img":"entertainment.png","sc_img":"entertainment.png","totalprice":10000,"entryFee":50,"live":1},{"q_id":1751,"question":"Guess the Hindi movie title: Shrimaan Bharat","answer":"Bharat,Mr. India,Shrimaan,The Great Bharat","correct":"Mr. India","time":"1652710530","coins":100,"sc_id":18,"title":"Guess-The-Movie","c_id":9,"c_name":"Entertainment","c_img":"entertainment.png","sc_img":"entertainment.png","totalprice":10000,"entryFee":50,"live":1}]`;
+// Parse quiz data into JSON format
 const quizData = {
-  data: selectedQuestions,
+  data: JSON.parse(quizjson),
 };
-
-// Function to get random questions from the quiz data
-function getRandomQuestions(questionsArray, count) {
-  const shuffled = [...questionsArray];
-  
-  // Fisher-Yates shuffle algorithm
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  
-  return shuffled.slice(0, count);
-}
 
 // DOM elements
 const quizContainer = document.getElementById("quiz-container");
@@ -107,12 +78,12 @@ function checkAnswer(selectedAnswer, index) {
 
     // Highlight correct and incorrect answers
     if (buttons[i].innerText === currentQuestion.correct) {
-      buttons[i].style.boxShadow = "#0bff46 0px 0px 11px";
-      // buttons[i].style.background = "#13a30025";
+      buttons[i].style.border = "#0d8009 solid 1px";
+      buttons[i].style.background = "#13a30025";
     }
     if (buttons[index].innerText !== currentQuestion.correct) {
-      document.getElementById(index).style.boxShadow = "#ff0000 0px 0px 11px";
-      // document.getElementById(index).style.background = "#a3000025";
+      document.getElementById(index).style.border = "red solid 1px";
+      document.getElementById(index).style.background = "#a3000025";
     }
   }
 
@@ -145,12 +116,13 @@ function nextQuestion() {
     quizContainer.innerHTML = `<input type="hidden" value="${coin}" id="coin">`;
     let getcoin = document.getElementById("coin").value;
     localStorage.setItem("coin", getcoin);
-    localStorage.setItem("totalcoin", getcoin)
-    localStorage.setItem("totalplayed", 0)
+    localStorage.setItem("totalcoin", getcoin);
+    localStorage.setItem("totalplayed", 0);
     localStorage.setItem("is_played", 1);
     localStorage.setItem("rewarded", 0);
 
-    treasureopen(); // Call function to handle end of quiz actions
+    closereward();
+    // treasureopen(); // Call function to handle end of quiz actions
   }
 }
 

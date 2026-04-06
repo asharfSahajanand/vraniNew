@@ -28,13 +28,13 @@ const quizData = {
 // Function to get random questions from the quiz data
 function getRandomQuestions(questionsArray, count) {
   const shuffled = [...questionsArray];
-
+  
   // Fisher-Yates shuffle algorithm
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-
+  
   return shuffled.slice(0, count);
 }
 
@@ -66,12 +66,6 @@ function showQuestion() {
   const currentQuestion = quizData.data[currentQuestionIndex];
   quizTitle.innerText = currentQuestion.title;
   questionElement.innerText = currentQuestion.question;
-
-  // Show interstitial ad only at specific question indexes to avoid excessive ads
-  if (currentQuestionIndex === 1) {
-    // Uncomment to enable interstitial ads at specific points
-    RewardAd();
-  }
 
   // Split answers and shuffle them
   const shuffledAnswers = [...currentQuestion.answer.split(",")];
@@ -151,127 +145,14 @@ function nextQuestion() {
     quizContainer.innerHTML = `<input type="hidden" value="${coin}" id="coin">`;
     let getcoin = document.getElementById("coin").value;
     localStorage.setItem("coin", getcoin);
-    localStorage.setItem("totalcoin", getcoin);
-    localStorage.setItem("totalplayed", 0);
+    localStorage.setItem("totalcoin", getcoin)
+    localStorage.setItem("totalplayed", 0)
     localStorage.setItem("is_played", 1);
     localStorage.setItem("rewarded", 0);
-    // closereward();
+
     treasureopen(); // Call function to handle end of quiz actions
   }
 }
 
 // Start the quiz when the script runs
 startQuiz();
-
-function RewardAd() {
-  if (!window.googletag || !googletag.cmd || !googletag.enums) {
-    console.error("Google Ad Manager is not properly initialized.");
-    showToast({
-      title: "Error",
-      msg: "Ad system not ready. Please try again.",
-    });
-    return;
-  }
-
-  googletag.cmd.push(function () {
-    try {
-      if (
-        !googletag.enums.OutOfPageFormat ||
-        !googletag.enums.OutOfPageFormat.REWARDED
-      ) {
-        console.error("Rewarded ad format not supported");
-        showToast({
-          title: "Error",
-          msg: "Rewarded ads not supported on this device.",
-        });
-        return;
-      }
-
-      const rewardedSlot = googletag
-        .defineOutOfPageSlot(
-          "/23330730517/Quizniva.com_d1",
-          googletag.enums.OutOfPageFormat.REWARDED
-        )
-        .addService(googletag.pubads());
-
-      if (!rewardedSlot) {
-        console.error("Failed to create finance rewarded ad slot");
-        showToast({ title: "Error", msg: "Failed to create reward ad." });
-        return;
-      }
-
-      googletag.display(rewardedSlot);
-      console.log("Attempting to display finance rewarded ad...");
-
-      const timeoutId = setTimeout(() => {
-        console.log("Finance rewarded ad timeout");
-        showToast({
-          title: "Timeout",
-          msg: "Ad took too long to load. Please try again.",
-        });
-        googletag.destroySlots([rewardedSlot]);
-      }, 10000);
-
-      googletag.pubads().addEventListener("rewardedSlotReady", function (evt) {
-        console.log("Finance rewarded ad ready.");
-        clearTimeout(timeoutId);
-        evt.makeRewardedVisible();
-      });
-
-      googletag.pubads().addEventListener("rewardedSlotClosed", function () {
-        console.log("Finance rewarded ad closed.");
-        clearTimeout(timeoutId);
-        googletag.destroySlots([rewardedSlot]);
-        showToast({
-          title: "Reward Earned!",
-          msg: "100 coins added to your account!",
-        });
-      });
-
-      googletag.pubads().addEventListener("rewardedSlotGranted", function () {
-        console.log("Finance reward granted.");
-        showToast({
-          title: "Success!",
-          msg: "Reward will be credited shortly.",
-        });
-      });
-    } catch (error) {
-      console.error("Error during finance rewarded ad setup:", error);
-      showToast({
-        title: "Error",
-        msg: "Failed to load rewarded ad: " + error.message,
-      });
-    }
-  });
-}
-
-// Updated interstitial ad function to use Google Ad Manager
-function ShowInterstitialAd() {
-  // Only show interstitial if googletag is available
-  if (window.googletag && googletag.cmd) {
-    googletag.cmd.push(function () {
-      try {
-        // Define an interstitial ad slot
-        const interstitialSlot = googletag
-          .defineOutOfPageSlot(
-            "/23270265301/sahajanand_quiz.vubi.online_interstitial",
-            googletag.enums.OutOfPageFormat.INTERSTITIAL
-          )
-          .addService(googletag.pubads());
-
-        if (interstitialSlot) {
-          googletag.pubads().addEventListener("slotOnload", function (event) {
-            if (event.slot === interstitialSlot) {
-              // Interstitial ad loaded
-            }
-          });
-
-          // Display the interstitial
-          googletag.display(interstitialSlot);
-        }
-      } catch (error) {
-        // Silent error handling to prevent user experience issues
-      }
-    });
-  }
-}
