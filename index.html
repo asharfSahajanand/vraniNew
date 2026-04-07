@@ -20,23 +20,34 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1615420563101212"
     data-overlays="bottom" crossorigin="anonymous"></script>
 
-  <!-- ✅ Single clean adBreak / adConfig setup — no duplicates -->
   <script>
     window.adsbygoogle = window.adsbygoogle || [];
-    var adBreak = window.adBreak = adConfig = function (o) { adsbygoogle.push(o); };
+
+    // ✅ Proper global functions
+    window.adBreak = function (o) {
+      adsbygoogle.push(o);
+    };
+
+    window.adConfig = function (o) {
+      adsbygoogle.push(o);
+    };
+
+    // ✅ Enable preload
     adConfig({
       preloadAdBreaks: 'on',
-      sound: 'off',
+      sound: 'off'
+    });
+
+    // ✅ Trigger preload after load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        adBreak({
+          type: 'start',
+          name: 'preload_ads'
+        });
+      }, 3000);
     });
   </script>
-
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-      var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-      j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-MRF99376');</script>
 
   <style>
     /* Toast styles */
@@ -88,9 +99,6 @@
 </head>
 
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRF99376" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- Toast container -->
   <div id="toast-container" class="fixed top-5 right-5 space-y-4" style="z-index: 99999;"></div>
@@ -190,13 +198,13 @@
           </div>
 
           <!-- Contact section -->
-          <div class="col mt-3">
+          <!-- <div class="col mt-3">
             <div class="ft_area flex p-1">
               <p class="text-sm p-2 text-left">Turn your audience into revenue with trusted premium ad solutions.</p>
               <button class="default_btn"
                 onclick="window.open('https://contact.hellobihar.com/', '_blank')">Contact</button>
             </div>
-          </div>
+          </div> -->
 
           <!-- Quiz rules -->
           <div class="col mt-4">
@@ -276,42 +284,34 @@
     // ✅ Fixed: was checking adBreak !== 'function' (string comparison — always true!)
     //           correct check is typeof adBreak !== 'function'
     function RewardAd() {
-      if (adBreak !== 'function') {
-        // adBreak not loaded — fallback: give coins anyway
-        addCoins(100);
-        showToast({ title: 'Coins Not Added!', msg: 'Try Later (ad not available)' });
-        closereward()
+      if (typeof adBreak !== 'function') {
+        console.log('adBreak not ready');
+        showToast({ title: 'No Ad', msg: 'Try later' });
         return;
       }
 
       adBreak({
         type: 'reward',
         name: 'reward_coin',
+
         beforeReward: function (showAdFn) {
           showAdFn();
         },
+
         adDismissed: function () {
-          showToast({ title: 'Dismissed', msg: '🚫 Ad dismissed — no coins awarded' });
-          closereward()
+          showToast({ title: 'Dismissed', msg: '🚫 No reward given' });
+          closereward();
         },
-        adViewed: function () {
-          // coins are awarded in adBreakDone after full view
-        },
+
         adBreakDone: function (placementInfo) {
           console.log('breakStatus:', placementInfo.breakStatus);
+
           if (placementInfo.breakStatus === 'viewed') {
             addCoins(100);
             showToast({ title: 'Congratulations!', msg: '🥳 +100 coins added!' });
-          } else if (
-            placementInfo.breakStatus === 'noAdPreloaded' ||
-            placementInfo.breakStatus === 'noAdAvailable' ||
-            placementInfo.breakStatus === 'frequencyCapped' ||
-            placementInfo.breakStatus === 'other'
-          ) {
-            // Fallback — reward anyway so user isn't frustrated
-            addCoins(100);
-            showToast({ title: 'Coins Not Added!', msg: 'Try Later (ad not available)' });
-            closereward()
+            closereward();
+          } else {
+            showToast({ title: 'No Ad Available', msg: 'Try again later' });
           }
         }
       });

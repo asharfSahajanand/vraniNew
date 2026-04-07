@@ -74,53 +74,37 @@
         data-overlays="bottom" crossorigin="anonymous"></script>
     <script>
         window.adsbygoogle = window.adsbygoogle || [];
-        var afg = {};
 
-        afg.adBreak = window.adConfig = function (o) {
+        // ✅ Proper global functions
+        window.adBreak = function (o) {
             adsbygoogle.push(o);
         };
-        afg.ready = false;
 
-        var onReady = function () {
-            afg.adBreak({
-                type: 'start',
-                name: 'gamesdonut-ads',
-                beforeAd: () => {
-                    console.log('>> Before AD')
-                },
-                adBreakDone: () => {
-                    console.log('>> After AD')
-                }
-            });
+        window.adConfig = function (o) {
+            adsbygoogle.push(o);
         };
-        window.afg = afg;
-    </script>
 
-    <script>
-        window.adsbygoogle = window.adsbygoogle || []; var adBreak = adConfig = function (o) { adsbygoogle.push(o); }
+        // ✅ Enable preload
         adConfig({
             preloadAdBreaks: 'on',
-            sound: 'off',
+            sound: 'off'
+        });
+
+        // ✅ Trigger preload after load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                adBreak({
+                    type: 'start',
+                    name: 'preload_ads'
+                });
+            }, 3000);
         });
     </script>
 
-    <!-- Google Tag Manager -->
-    <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-MRF99376');</script>
-    <!-- End Google Tag Manager -->
 </head>
 
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MRF99376" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+
     <div>
         <!-- Toast container for displaying toast notifications -->
         <div id="toast-container" class="fixed top-5 right-5 space-y-4" style="z-index: 99999;"></div>
@@ -249,40 +233,34 @@
 
         // ─── Reward Ad ─────────────────────────────────────────────────
         function RewardAd() {
-            // Fallback: if adBreak not loaded, just give coins
-            if (adBreak !== 'function') {
-                console.log("ksdlfjsk");
-
-                showToast({ title: 'Coins Not Added!', msg: 'Try Later (ad not available)' });
+            if (typeof adBreak !== 'function') {
+                console.log('adBreak not ready');
+                showToast({ title: 'No Ad', msg: 'Try later' });
                 return;
             }
 
             adBreak({
                 type: 'reward',
                 name: 'reward_coin',
+
                 beforeReward: function (showAdFn) {
                     showAdFn();
                 },
+
                 adDismissed: function () {
-                    showToast({ title: 'Dismissed', msg: '🚫 Ad was dismissed — no coins awarded' });
+                    showToast({ title: 'Dismissed', msg: '🚫 No reward given' });
+                    closereward();
                 },
-                adViewed: function () {
-                    // fires when ad fully watched — coins awarded in adBreakDone
-                },
+
                 adBreakDone: function (placementInfo) {
                     console.log('breakStatus:', placementInfo.breakStatus);
+
                     if (placementInfo.breakStatus === 'viewed') {
                         addCoins(100);
                         showToast({ title: 'Congratulations!', msg: '🥳 +100 coins added!' });
-                    } else if (
-                        placementInfo.breakStatus === 'noAdPreloaded' ||
-                        placementInfo.breakStatus === 'noAdAvailable' ||
-                        placementInfo.breakStatus === 'frequencyCapped' ||
-                        placementInfo.breakStatus === 'other'
-                    ) {
-                        // Fallback — reward anyway so user isn't frustrated
-                        addCoins(100);
-                        showToast({ title: 'Coins Not Added!', msg: 'Try Later (ad not available)' });
+                        closereward();
+                    } else {
+                        showToast({ title: 'No Ad Available', msg: 'Try again later' });
                     }
                 }
             });
