@@ -37,8 +37,8 @@
         window.addEventListener('load', () => {
             setTimeout(() => {
                 adBreak({
-                    type: 'start',
-                    name: 'preload_ads'
+                    type: 'reward',
+                    name: 'reward_coin'
                 });
             }, 3000);
         });
@@ -169,7 +169,7 @@
             <div class="grid h-full max-w-lg grid-cols-3 mx-auto">
 
                 <!-- Category -->
-                <button type="button" onclick="window.location.href='/category.html'"
+                <button type="button" onclick="goToNextPage('/category.html')"
                     class="inline-flex flex-col items-center justify-center font-medium px-5 dark:hover:bg-gray-800 group">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2">
@@ -181,7 +181,7 @@
                 </button>
 
                 <!-- Home -->
-                <button type="button" onclick="window.location.href='/home.html'"
+                <button type="button" onclick="goToNextPage('/home.html')"
                     class="inline-flex flex-col items-center justify-center font-medium px-5 bg-gray-700 group"
                     style="background-color: #454545; border-radius: 14px 14px 0 0; box-shadow: #1a1a1a 0px 0px 19px">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="#ffff" stroke="#ffff"
@@ -194,7 +194,7 @@
                 </button>
 
                 <!-- Profile -->
-                <button type="button" onclick="window.location.href='/profile.html'"
+                <button type="button" onclick="goToNextPage('/profile.html')"
                     class="inline-flex flex-col items-center justify-center font-medium px-5 dark:hover:bg-gray-800 group">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2">
@@ -278,14 +278,25 @@
                 }
             });
         }
-        // ─── Interstitial Ad ───────────────────────────────────────────
-        function ShowInterstitialAd() {
-            if (typeof adBreak !== 'function') return;
+        function goToNextPage(url) {
+            if (typeof adBreak !== 'function') {
+                window.location.href = url;
+                return;
+            }
+
             adBreak({
                 type: 'start',
-                name: 'game_started',
-                adBreakDone: function (placementInfo) {
-                    console.log('interstitial breakStatus:', placementInfo.breakStatus);
+                name: 'page_transition',
+
+                beforeAd: () => {
+                    console.log('Ad about to show');
+                },
+
+                adBreakDone: (placementInfo) => {
+                    console.log('Status:', placementInfo.breakStatus);
+
+                    // ALWAYS navigate after
+                    window.location.href = url;
                 }
             });
         }

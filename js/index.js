@@ -28,13 +28,13 @@ const quizData = {
 // Function to get random questions from the quiz data
 function getRandomQuestions(questionsArray, count) {
   const shuffled = [...questionsArray];
-  
+
   // Fisher-Yates shuffle algorithm
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  
+
   return shuffled.slice(0, count);
 }
 
@@ -132,6 +132,7 @@ function checkAnswer(selectedAnswer, index) {
 
 // Function to move to the next question
 function nextQuestion() {
+  InterForQuestion();
   resultElement.style.display = "none";
   currentQuestionIndex++;
   let counting = currentQuestionIndex;
@@ -145,8 +146,8 @@ function nextQuestion() {
     quizContainer.innerHTML = `<input type="hidden" value="${coin}" id="coin">`;
     let getcoin = document.getElementById("coin").value;
     localStorage.setItem("coin", getcoin);
-    localStorage.setItem("totalcoin", getcoin)
-    localStorage.setItem("totalplayed", 0)
+    localStorage.setItem("totalcoin", getcoin);
+    localStorage.setItem("totalplayed", 0);
     localStorage.setItem("is_played", 1);
     localStorage.setItem("rewarded", 0);
 
@@ -156,3 +157,26 @@ function nextQuestion() {
 
 // Start the quiz when the script runs
 startQuiz();
+
+function InterForQuestion() {
+  if (typeof adBreak !== "function") {
+    window.location.href = url;
+    return;
+  }
+
+  adBreak({
+    type: "start",
+    name: "page_transition",
+
+    beforeAd: () => {
+      console.log("Ad about to show");
+    },
+
+    adBreakDone: (placementInfo) => {
+      console.log("Status:", placementInfo.breakStatus);
+
+      // ALWAYS navigate after
+      window.location.href = url;
+    },
+  });
+}

@@ -94,8 +94,8 @@
     window.addEventListener('load', () => {
       setTimeout(() => {
         adBreak({
-          type: 'start',
-          name: 'preload_ads'
+          type: 'reward',
+          name: 'reward_coin'
         });
       }, 3000);
     });
@@ -310,6 +310,29 @@
             addCoins(100);
             showToast({ title: 'Coins Not Added!', msg: 'Try Later (ad not available)' });
           }
+        }
+      });
+    }
+
+    function goToNextPage(url) {
+      if (typeof adBreak !== 'function') {
+        window.location.href = url;
+        return;
+      }
+
+      adBreak({
+        type: 'start',
+        name: 'page_transition',
+
+        beforeAd: () => {
+          console.log('Ad about to show');
+        },
+
+        adBreakDone: (placementInfo) => {
+          console.log('Status:', placementInfo.breakStatus);
+
+          // ALWAYS navigate after
+          window.location.href = url;
         }
       });
     }
