@@ -298,6 +298,11 @@
           showAdFn();
         },
 
+        // ✅ REQUIRED
+        adViewed: function () {
+          console.log('Ad viewed');
+        },
+
         adDismissed: function () {
           showToast({ title: 'Dismissed', msg: '🚫 No reward given' });
           closereward();

@@ -35304,20 +35304,20 @@ let all_quizes = [
   },
 ];
 window.onload = async function () {
-    function getUrlParameter(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-        var results = regex.exec(location.search);
-        return results === null
-            ? ""
-            : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
-    
-    var scId = getUrlParameter("sc_id");
-    
-    // Check if sc_id parameter exists
-    if (!scId) {
-        document.getElementById("quiz-container").innerHTML = `
+  function getUrlParameter(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(location.search);
+    return results === null
+      ? ""
+      : decodeURIComponent(results[1].replace(/\+/g, " "));
+  }
+
+  var scId = getUrlParameter("sc_id");
+
+  // Check if sc_id parameter exists
+  if (!scId) {
+    document.getElementById("quiz-container").innerHTML = `
             <div style="text-align: center; padding: 40px;">
                 <h2 style="color: #ff0000; margin-bottom: 20px;">⚠️ Parameter Not Found</h2>
                 <p style="font-size: 16px; margin-bottom: 20px;">The quiz ID (sc_id) parameter is missing from the URL.</p>
@@ -35325,179 +35325,179 @@ window.onload = async function () {
                 <button onclick="history.back()" style="margin-top: 20px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Go Back</button>
             </div>
         `;
-        return;
-    }
-    
-    // Convert sc_id to number for comparison
-    const scIdNum = Number(scId);
-    
-    function getRandomBySCID(data, sc_id, count = 12) {
-      return new Promise((resolve, reject) => {
-        try {
-          // Check if data array exists
-          if (!data || !Array.isArray(data)) {
-            reject(new Error("INVALID_DATA"));
-            return;
-          }
-          
-          // Filter by sc_id (compare as numbers)
-          const filtered = data.filter((item) => Number(item.sc_id) === sc_id);
-          
-          // Check if filtered data is empty
-          if (filtered.length === 0) {
-            reject(new Error("NO_DATA_FOUND"));
-            return;
-          }
-  
-          // Shuffle and return requested count
-          const shuffled = filtered.sort(() => 0.5 - Math.random());
-          resolve(shuffled.slice(0, count));
-        } catch (err) {
-          reject(err);
+    return;
+  }
+
+  // Convert sc_id to number for comparison
+  const scIdNum = Number(scId);
+
+  function getRandomBySCID(data, sc_id, count = 12) {
+    return new Promise((resolve, reject) => {
+      try {
+        // Check if data array exists
+        if (!data || !Array.isArray(data)) {
+          reject(new Error("INVALID_DATA"));
+          return;
         }
+
+        // Filter by sc_id (compare as numbers)
+        const filtered = data.filter((item) => Number(item.sc_id) === sc_id);
+
+        // Check if filtered data is empty
+        if (filtered.length === 0) {
+          reject(new Error("NO_DATA_FOUND"));
+          return;
+        }
+
+        // Shuffle and return requested count
+        const shuffled = filtered.sort(() => 0.5 - Math.random());
+        resolve(shuffled.slice(0, count));
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  try {
+    // Wait for quiz data to be fetched
+    const quizData = await getRandomBySCID(all_quizes, scIdNum, 12);
+
+    // Your quiz logic starts here
+    let currentQuestionIndex = 0;
+    let coin = 0;
+    let score = 0;
+
+    // DOM elements
+    const quizContainer = document.getElementById("quiz-container");
+    const quizTitle = document.getElementById("quiz-title");
+    const questionElement = document.getElementById("question");
+    const answersElement = document.getElementById("answers");
+    const resultElement = document.getElementById("result");
+
+    // Display total number of questions
+    document.getElementById("totalquestion").innerText = quizData.length;
+
+    // Function to start the quiz
+    function startQuiz() {
+      setTimeout(() => {
+        console.log("after 60sec quiz close");
+        location.href = "/result.html";
+      }, 60000);
+      showQuestion();
+    }
+
+    // Function to shuffle array elements
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // Function to display current question and answers
+    function showQuestion() {
+      const currentQuestion = quizData[currentQuestionIndex];
+      quizTitle.innerText = currentQuestion.title;
+      questionElement.innerText = currentQuestion.question;
+
+      // Split answers and shuffle them
+      const shuffledAnswers = [...currentQuestion.answer.split(",")];
+      shuffleArray(shuffledAnswers);
+
+      // Clear previous answers
+      answersElement.innerHTML = "";
+
+      // Create answer buttons
+      var answersDiv = document.createElement("div");
+      shuffledAnswers.forEach((answer, index) => {
+        var button = document.createElement("div");
+        button.innerText = answer;
+        button.onclick = () => checkAnswer(answer, index + 1);
+        button.id = `${index + 1}`;
+        button.classList.add("option");
+        button.classList.add("text-left");
+        button.classList.add("p-4");
+
+        answersDiv.classList.add("grid");
+        answersDiv.classList.add("grid-cols-2");
+        answersDiv.classList.add("gap-2");
+        answersDiv.classList.add("text-sm");
+        answersDiv.classList.add("font-bold");
+        answersDiv.appendChild(button);
       });
+
+      answersElement.appendChild(answersDiv);
     }
-  
-    try {
-      // Wait for quiz data to be fetched
-      const quizData = await getRandomBySCID(all_quizes, scIdNum, 12);
-  
-      // Your quiz logic starts here
-      let currentQuestionIndex = 0;
-      let coin = 0;
-      let score = 0;
-  
-      // DOM elements
-      const quizContainer = document.getElementById("quiz-container");
-      const quizTitle = document.getElementById("quiz-title");
-      const questionElement = document.getElementById("question");
-      const answersElement = document.getElementById("answers");
-      const resultElement = document.getElementById("result");
-  
-      // Display total number of questions
-      document.getElementById("totalquestion").innerText = quizData.length;
-  
-      // Function to start the quiz
-      function startQuiz() {
-        setTimeout(() => {
-          console.log('after 60sec quiz close');
-          location.href = "/result.html";
-        }, 60000);
+
+    // Function to check the selected answer
+    function checkAnswer(selectedAnswer, index) {
+      const currentQuestion = quizData[currentQuestionIndex];
+      const buttons = answersElement.getElementsByTagName("div");
+
+      // Disable button clicks after answering
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].style.pointerEvents = "none";
+
+        if (buttons[i].innerText === currentQuestion.correct) {
+          buttons[i].style.boxShadow = "#0bff46 0px 0px 11px";
+        }
+        if (buttons[index].innerText !== currentQuestion.correct) {
+          document.getElementById(index).style.boxShadow =
+            "#ff0000 0px 0px 11px";
+        }
+      }
+
+      // Update result text and score based on answer
+      if (selectedAnswer === currentQuestion.correct) {
+        resultElement.innerText = "Correct!";
+        coin += parseInt(currentQuestion.coins);
+        score += 10;
+        resultElement.style.color = "green";
+      } else {
+        resultElement.innerText = "Wrong!";
+        resultElement.style.color = "red";
+      }
+
+      resultElement.style.display = "none";
+      setTimeout(nextQuestion, 1000);
+    }
+
+    // Function to move to the next question
+    function nextQuestion() {
+      resultElement.style.display = "none";
+      currentQuestionIndex++;
+      let counting = currentQuestionIndex;
+      document.getElementById("currentindex").innerText = counting + 1;
+
+      // Show next question or end quiz
+      if (currentQuestionIndex < quizData.length) {
         showQuestion();
+      } else {
+        // End of quiz: Store total coins, score, and update local storage
+        quizContainer.innerHTML = `<input type="hidden" value="${coin}" id="coin">`;
+        let getcoin = document.getElementById("coin").value;
+        let oldcoin = localStorage.totalcoin || 0;
+        let oldplayed = localStorage.totalplayed || 0;
+
+        localStorage.setItem("coin", Number(getcoin));
+        localStorage.setItem("totalcoin", Number(getcoin) + Number(oldcoin));
+        localStorage.setItem("score", score);
+        localStorage.setItem("totalplayed", Number(oldplayed) + 1);
+
+        location.href = "/result.html";
       }
-  
-      // Function to shuffle array elements
-      function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-        }
-      }
-  
-      // Function to display current question and answers
-      function showQuestion() {
-        const currentQuestion = quizData[currentQuestionIndex];
-        quizTitle.innerText = currentQuestion.title;
-        questionElement.innerText = currentQuestion.question;
-  
-        // Split answers and shuffle them
-        const shuffledAnswers = [...currentQuestion.answer.split(",")];
-        shuffleArray(shuffledAnswers);
-  
-        // Clear previous answers
-        answersElement.innerHTML = "";
-  
-        // Create answer buttons
-        var answersDiv = document.createElement("div");
-        shuffledAnswers.forEach((answer, index) => {
-          var button = document.createElement("div");
-          button.innerText = answer;
-          button.onclick = () => checkAnswer(answer, index + 1);
-          button.id = `${index + 1}`;
-          button.classList.add("option");
-          button.classList.add("text-left");
-          button.classList.add("p-4");
-  
-          answersDiv.classList.add("grid");
-          answersDiv.classList.add("grid-cols-2");
-          answersDiv.classList.add("gap-2");
-          answersDiv.classList.add("text-sm");
-          answersDiv.classList.add("font-bold");
-          answersDiv.appendChild(button);
-        });
-  
-        answersElement.appendChild(answersDiv);
-      }
-  
-      // Function to check the selected answer
-      function checkAnswer(selectedAnswer, index) {
-        const currentQuestion = quizData[currentQuestionIndex];
-        const buttons = answersElement.getElementsByTagName("div");
-  
-        // Disable button clicks after answering
-        for (let i = 0; i < buttons.length; i++) {
-          buttons[i].style.pointerEvents = "none";
-  
-          if (buttons[i].innerText === currentQuestion.correct) {
-            buttons[i].style.boxShadow = "#0bff46 0px 0px 11px";
-          }
-          if (buttons[index].innerText !== currentQuestion.correct) {
-            document.getElementById(index).style.boxShadow = "#ff0000 0px 0px 11px";
-          }
-        }
-  
-        // Update result text and score based on answer
-        if (selectedAnswer === currentQuestion.correct) {
-          resultElement.innerText = "Correct!";
-          coin += parseInt(currentQuestion.coins);
-          score += 10;
-          resultElement.style.color = "green";
-        } else {
-          resultElement.innerText = "Wrong!";
-          resultElement.style.color = "red";
-        }
-  
-        resultElement.style.display = "none";
-        setTimeout(nextQuestion, 1000);
-      }
-  
-      // Function to move to the next question
-      function nextQuestion() {
-        resultElement.style.display = "none";
-        currentQuestionIndex++;
-        let counting = currentQuestionIndex;
-        document.getElementById("currentindex").innerText = counting + 1;
-  
-        // Show next question or end quiz
-        if (currentQuestionIndex < quizData.length) {
-          showQuestion();
-        } else {
-          // End of quiz: Store total coins, score, and update local storage
-          quizContainer.innerHTML = `<input type="hidden" value="${coin}" id="coin">`;
-          let getcoin = document.getElementById("coin").value;
-          let oldcoin = localStorage.totalcoin || 0;
-          let oldplayed = localStorage.totalplayed || 0;
-  
-          localStorage.setItem("coin", Number(getcoin));
-          localStorage.setItem("totalcoin", Number(getcoin) + Number(oldcoin));
-          localStorage.setItem("score", score);
-          localStorage.setItem("totalplayed", Number(oldplayed) + 1);
-  
-          location.href = "/result.html";
-        }
-      }
-  
-      // Start the quiz
-      startQuiz();
-      
-    } catch (error) {
-      console.error("Error fetching quiz data:", error);
-      
-      // Provide specific error messages
-      let errorMessage = "";
-      
-      if (error.message === "NO_DATA_FOUND") {
-        errorMessage = `
+    }
+
+    // Start the quiz
+    startQuiz();
+  } catch (error) {
+    console.error("Error fetching quiz data:", error);
+
+    // Provide specific error messages
+    let errorMessage = "";
+
+    if (error.message === "NO_DATA_FOUND") {
+      errorMessage = `
             <div style="text-align: center; padding: 40px; font-family: Arial, sans-serif;">
                 <div style="font-size: 48px; margin-bottom: 20px;">🔍</div>
                 <h2 style="color: #ff6b00; margin-bottom: 20px;">Quiz Not Found</h2>
@@ -35509,8 +35509,8 @@ window.onload = async function () {
                 </div>
             </div>
         `;
-      } else if (error.message === "INVALID_DATA") {
-        errorMessage = `
+    } else if (error.message === "INVALID_DATA") {
+      errorMessage = `
             <div style="text-align: center; padding: 40px; font-family: Arial, sans-serif;">
                 <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
                 <h2 style="color: #dc3545; margin-bottom: 20px;">Data Error</h2>
@@ -35519,8 +35519,8 @@ window.onload = async function () {
                 <button onclick="location.reload()" style="margin: 10px; padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold;">Refresh Page</button>
             </div>
         `;
-      } else {
-        errorMessage = `
+    } else {
+      errorMessage = `
             <div style="text-align: center; padding: 40px; font-family: Arial, sans-serif;">
                 <div style="font-size: 48px; margin-bottom: 20px;">❌</div>
                 <h2 style="color: #ff0000; margin-bottom: 20px;">Error Loading Quiz</h2>
@@ -35531,8 +35531,8 @@ window.onload = async function () {
                 </div>
             </div>
         `;
-      }
-      
-      document.getElementById("quiz-container").innerHTML = errorMessage;
     }
-  };
+
+    document.getElementById("quiz-container").innerHTML = errorMessage;
+  }
+};

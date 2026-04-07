@@ -1,25 +1,25 @@
 <script>
-(function () {
-  const appStoreURL = "https://apps.apple.com/us/app/vibewalls-wallpaper-hd-4k/id6751738934";
-  const customURL = "vubi://category/christmas"; // <-- your app scheme
+  (function () {
+    const appStoreURL = "https://apps.apple.com/us/app/vibewalls-wallpaper-hd-4k/id6751738934";
+    const customURL = "vubi://category/christmas"; // <-- your app scheme
 
-  let hidden = false;
+    let hidden = false;
 
-  // Detect if page becomes hidden (means app opened)
-  document.addEventListener("visibilitychange", function() {
-    if (document.hidden) {
-      hidden = true;
-    }
-  });
+    // Detect if page becomes hidden (means app opened)
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        hidden = true;
+      }
+    });
 
-  // Try to open app
-  window.location.href = customURL;
+    // Try to open app
+    window.location.href = customURL;
 
-  // Fallback only IF app did not open
-  setTimeout(() => {
-    if (!hidden) {
-      window.location.href = appStoreURL;
-    }
-  }, 1500);
-})();
+    // Fallback only IF app did not open
+    setTimeout(() => {
+      if (!hidden) {
+        window.location.href = appStoreURL;
+      }
+    }, 1500);
+  })();
 </script>

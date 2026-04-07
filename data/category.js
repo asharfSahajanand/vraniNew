@@ -533,20 +533,19 @@ categories.forEach((item) => {
   container.appendChild(div);
 });
 
-const Subcatcontainer = document.getElementById("sub_categories")
+const Subcatcontainer = document.getElementById("sub_categories");
 
 function SelectCatSbucat(item) {
+  console.log(item);
 
-    console.log(item);
-    
   Subcatcontainer.innerHTML = "";
   container.innerHTML = "";
 
   // 🧠 Filter subcategories related to the selected category
-  const relatedSubcats = sub_category.filter(sub => sub.id == item);
+  const relatedSubcats = sub_category.filter((sub) => sub.id == item);
 
-//   console.log(relatedSubcats);
-  
+  //   console.log(relatedSubcats);
+
   // If no related quizzes found
   if (relatedSubcats.length === 0) {
     Subcatcontainer.innerHTML = `

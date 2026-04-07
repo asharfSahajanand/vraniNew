@@ -365,11 +365,10 @@ body {
 }
 
 .adsbygoogle::before {
-  content: 'ads';
+  content: "ads";
   color: #ccc;
   font-weight: bold;
 }
-
 
 @media screen and (max-width: 640px) {
   .popup-content {
