@@ -91,14 +91,14 @@
         });
 
         // ✅ Trigger preload after load
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                adBreak({
-                    type: 'reward',
-                    name: 'reward_coin'
-                });
-            }, 3000);
-        });
+        // window.addEventListener('load', () => {
+        //     setTimeout(() => {
+        //         adBreak({
+        //             type: 'reward',
+        //             name: 'reward_coin'
+        //         });
+        //     }, 3000);
+        // });
     </script>
 </head>
 
@@ -294,43 +294,43 @@
 
         // ─── Reward Ad ─────────────────────────────────────────────────
         function RewardAd() {
-            if (typeof adBreak !== 'function') {
-                console.log('adBreak not ready');
-                showToast({ title: 'No Ad', msg: 'Try later' });
-                return;
-            }
+  if (typeof adBreak !== 'function') {
+    console.log('adBreak not ready');
+    showToast({ title: 'No Ad', msg: 'Try later' });
+    return;
+  }
 
-            adBreak({
-                type: 'reward',
-                name: 'reward_coin',
+  adBreak({
+    type: 'reward',
+    name: 'reward_coin',
 
-                beforeReward: function (showAdFn) {
-                    showAdFn();
-                },
+    beforeReward: function (showAdFn) {
+      showAdFn();
+    },
 
-                // ✅ REQUIRED
-                adViewed: function () {
-                    console.log('Ad viewed');
-                },
+    // ✅ REQUIRED
+    adViewed: function () {
+      console.log('Ad viewed');
+    },
 
-                adDismissed: function () {
-                    showToast({ title: 'Dismissed', msg: '🚫 No reward given' });
-                    closereward();
-                },
+    adDismissed: function () {
+      showToast({ title: 'Dismissed', msg: '🚫 No reward given' });
+      closereward();
+    },
 
-                adBreakDone: function (placementInfo) {
-                    console.log('breakStatus:', placementInfo.breakStatus);
+    adBreakDone: function (placementInfo) {
+      console.log('breakStatus:', placementInfo.breakStatus);
 
-                    if (placementInfo.breakStatus === 'viewed') {
-                        addCoins(100);
-                        showToast({ title: 'Congratulations!', msg: '🥳 +100 coins added!' });
-                        closereward();
-                    } else {
-                        showToast({ title: 'No Ad Available', msg: 'Try again later' });
-                    }
-                }
-            });
-        }
+      if (placementInfo.breakStatus === 'viewed') {
+        addCoins(100);
+        showToast({ title: 'Congratulations!', msg: '🥳 +100 coins added!' });
+        closereward();
+      } else {
+        showToast({ title: 'No Ad Available', msg: 'Try again later' });
+      }
+    }
+  });
+}
 
         let allcoins = localStorage.getItem('totalcoin');
         document.getElementById('total_coins').innerText = allcoins
